@@ -9,6 +9,7 @@ import org.mtransit.parser.Utils;
 import org.mtransit.parser.gtfs.data.GCalendar;
 import org.mtransit.parser.gtfs.data.GCalendarDate;
 import org.mtransit.parser.gtfs.data.GRoute;
+import org.mtransit.parser.gtfs.data.GSpec;
 import org.mtransit.parser.gtfs.data.GStop;
 import org.mtransit.parser.gtfs.data.GTrip;
 import org.mtransit.parser.mt.data.MAgency;
@@ -263,7 +264,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 	private static final String DASH = "-";
 
 	@Override
-	public void setTripHeadsign(MRoute route, MTrip mTrip, GTrip gTrip) {
+	public void setTripHeadsign(MRoute mRoute, MTrip mTrip, GTrip gTrip, GSpec gtfs) {
 		String gTripHeadsign = gTrip.trip_headsign;
 		int indexOfDASH = gTripHeadsign.indexOf(DASH);
 		if (indexOfDASH >= 0) {
@@ -271,17 +272,17 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 		}
 		int directionId = 0;
 		String stationName = cleanTripHeadsign(gTripHeadsign);
-		if (route.id == 12l) {
+		if (mRoute.id == 12l) {
 			stationName = GENERAL_HOSPITAL;
-		} else if (route.id == 16l) {
+		} else if (mRoute.id == 16l) {
 			stationName = SOUTHGATE;
-		} else if (route.id == 50l) {
+		} else if (mRoute.id == 50l) {
 			stationName = STONE_ROAD_EXPRESS;
-		} else if (route.id == 56l) {
+		} else if (mRoute.id == 56l) {
 			stationName = VICTORIA_EXPRESS;
-		} else if (route.id == 57l) {
+		} else if (mRoute.id == 57l) {
 			stationName = HARVARD_EXPRESS;
-		} else if (route.id == 58l) {
+		} else if (mRoute.id == 58l) {
 			stationName = EDINBURGH_EXPRESS;
 		}
 		mTrip.setHeadsignString(stationName, directionId);
