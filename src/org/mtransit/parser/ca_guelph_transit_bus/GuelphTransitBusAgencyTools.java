@@ -296,10 +296,19 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 	private static final Pattern AT = Pattern.compile("( at )", Pattern.CASE_INSENSITIVE);
 	private static final String AT_REPLACEMENT = " / ";
 
+	private static final Pattern POINT = Pattern.compile("((^|\\W){1}([\\w]{1})\\.(\\W|$){1})", Pattern.CASE_INSENSITIVE);
+	private static final String POINT_REPLACEMENT = "$2$3$4";
+
+	private static final Pattern POINTS = Pattern.compile("((^|\\W){1}([\\w]+)\\.(\\W|$){1})", Pattern.CASE_INSENSITIVE);
+	private static final String POINTS_REPLACEMENT = "$2$3$4";
+
 	@Override
 	public String cleanStopName(String gStopName) {
+		gStopName = POINT.matcher(gStopName).replaceAll(POINT_REPLACEMENT);
+		gStopName = POINTS.matcher(gStopName).replaceAll(POINTS_REPLACEMENT);
 		gStopName = AT.matcher(gStopName).replaceAll(AT_REPLACEMENT);
 		gStopName = MSpec.cleanNumbers(gStopName);
+		gStopName = MSpec.cleanStreetTypes(gStopName);
 		return MSpec.cleanLabel(gStopName);
 	}
 
