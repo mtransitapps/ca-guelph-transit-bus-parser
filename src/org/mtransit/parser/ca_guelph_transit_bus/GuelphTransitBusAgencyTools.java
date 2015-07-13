@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.mtransit.parser.DefaultAgencyTools;
 import org.mtransit.parser.Utils;
 import org.mtransit.parser.gtfs.data.GCalendar;
@@ -36,7 +37,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public void start(String[] args) {
-		System.out.printf("\nGenerating Guelph Transit bus data...\n");
+		System.out.printf("\nGenerating Guelph Transit bus data...");
 		long start = System.currentTimeMillis();
 		this.serviceIds = extractUsefulServiceIds(args, this);
 		super.start(args);
@@ -296,17 +297,13 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 	private static final Pattern AT = Pattern.compile("( at )", Pattern.CASE_INSENSITIVE);
 	private static final String AT_REPLACEMENT = " / ";
 
-	private static final Pattern POINT = Pattern.compile("((^|\\W){1}([\\w]{1})\\.(\\W|$){1})", Pattern.CASE_INSENSITIVE);
-	private static final String POINT_REPLACEMENT = "$2$3$4";
-
-	private static final Pattern POINTS = Pattern.compile("((^|\\W){1}([\\w]+)\\.(\\W|$){1})", Pattern.CASE_INSENSITIVE);
-	private static final String POINTS_REPLACEMENT = "$2$3$4";
+	private static final Pattern CLEAN_DEPART_ARRIVE = Pattern.compile("( (arrival|depart)$)", Pattern.CASE_INSENSITIVE);
 
 	@Override
 	public String cleanStopName(String gStopName) {
-		gStopName = POINT.matcher(gStopName).replaceAll(POINT_REPLACEMENT);
-		gStopName = POINTS.matcher(gStopName).replaceAll(POINTS_REPLACEMENT);
+		gStopName = CleanUtils.removePoints(gStopName);
 		gStopName = AT.matcher(gStopName).replaceAll(AT_REPLACEMENT);
+		gStopName = CLEAN_DEPART_ARRIVE.matcher(gStopName).replaceAll(StringUtils.EMPTY);
 		gStopName = CleanUtils.cleanNumbers(gStopName);
 		gStopName = CleanUtils.cleanStreetTypes(gStopName);
 		return CleanUtils.cleanLabel(gStopName);
