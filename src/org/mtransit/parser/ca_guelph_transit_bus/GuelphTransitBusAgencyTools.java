@@ -84,10 +84,10 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public long getRouteId(GRoute gRoute) {
-		if (ROUTE_GORDON_CORRIDOR.equals(gRoute.route_id)) {
+		if (ROUTE_GORDON_CORRIDOR.equals(gRoute.getRouteId())) {
 			return 9999;
 		}
-		String routeShortName = gRoute.route_short_name;
+		String routeShortName = gRoute.getRouteShortName();
 		if (routeShortName != null && routeShortName.length() > 0 && Utils.isDigitsOnly(routeShortName)) {
 			return Integer.valueOf(routeShortName); // using stop code as stop ID
 		}
@@ -107,7 +107,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public String getRouteShortName(GRoute gRoute) {
-		if (ROUTE_GORDON_CORRIDOR.equals(gRoute.route_id)) {
+		if (ROUTE_GORDON_CORRIDOR.equals(gRoute.getRouteId())) {
 			return GORDON_CORRIDOR_RSN;
 		}
 		return super.getRouteShortName(gRoute);
@@ -165,36 +165,36 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public String getRouteLongName(GRoute gRoute) {
-		if (ROUTE_GORDON_CORRIDOR.equals(gRoute.route_id)) {
+		if (ROUTE_GORDON_CORRIDOR.equals(gRoute.getRouteId())) {
 			return GORDON_CORRIDOR;
 		}
 		// @formatter:off
-		if (RSN_1A.equalsIgnoreCase(gRoute.route_short_name)) { return COLLEGE_EDINBURGH_CLOCKWISE;	}
-		if (RSN_1B.equalsIgnoreCase(gRoute.route_short_name)) { return COLLEGE_EDINBURGH_COUNTER_CLOCKWISE;	}
-		if (RSN_2A.equalsIgnoreCase(gRoute.route_short_name)) { return WEST_LOOP_CLOCKWISE;	}
-		if (RSN_2B.equalsIgnoreCase(gRoute.route_short_name)) { return WEST_LOOP_COUNTER_CLOCKWISE;	}
-		if (RSN_3A.equalsIgnoreCase(gRoute.route_short_name)) { return EAST_LOOP_CLOCKWISE;	}
-		if (RSN_3B.equalsIgnoreCase(gRoute.route_short_name)) { return EAST_LOOP_COUNTER_CLOCKWISE;	}
-		if (RSN_4.equalsIgnoreCase(gRoute.route_short_name)) { return YORK; }
-		if (RSN_5.equalsIgnoreCase(gRoute.route_short_name)) { return GORDON; }
-		if (RSN_6.equalsIgnoreCase(gRoute.route_short_name)) { return HARVARD_IRONWOOD; }
-		if (RSN_7.equalsIgnoreCase(gRoute.route_short_name)) { return KORTRIGHT_DOWNEY; }
-		if (RSN_8.equalsIgnoreCase(gRoute.route_short_name)) { return STONE_ROAD_MALL; }
-		if (RSN_9.equalsIgnoreCase(gRoute.route_short_name)) { return WATERLOO; }
-		if (RSN_10.equalsIgnoreCase(gRoute.route_short_name)) { return IMPERIAL; }
-		if (RSN_11.equalsIgnoreCase(gRoute.route_short_name)) { return WILLOW_WEST; }
-		if (RSN_12.equalsIgnoreCase(gRoute.route_short_name)) { return GENERAL_HOSPITAL; }
-		if (RSN_13.equalsIgnoreCase(gRoute.route_short_name)) { return VICTORIA_ROAD_RECREATION_CENTRE; }
-		if (RSN_14.equalsIgnoreCase(gRoute.route_short_name)) { return GRANGE; }
-		if (RSN_15.equalsIgnoreCase(gRoute.route_short_name)) { return UNIVERSITY_COLLEGE; }
-		if (RSN_16.equalsIgnoreCase(gRoute.route_short_name)) { return SOUTHGATE; }
-		if (RSN_20.equalsIgnoreCase(gRoute.route_short_name)) { return NORTHWEST_INDUSTRIAL; }
-		if (RSN_50.equalsIgnoreCase(gRoute.route_short_name)) { return STONE_ROAD_EXPRESS; }
-		if (RSN_56.equalsIgnoreCase(gRoute.route_short_name)) { return VICTORIA_EXPRESS; }
-		if (RSN_57.equalsIgnoreCase(gRoute.route_short_name)) { return HARVARD_EXPRESS; }
-		if (RSN_58.equalsIgnoreCase(gRoute.route_short_name)) { return EDINBURGH_EXPRESS; }
+		if (RSN_1A.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLLEGE_EDINBURGH_CLOCKWISE;	}
+		if (RSN_1B.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLLEGE_EDINBURGH_COUNTER_CLOCKWISE;	}
+		if (RSN_2A.equalsIgnoreCase(gRoute.getRouteShortName())) { return WEST_LOOP_CLOCKWISE;	}
+		if (RSN_2B.equalsIgnoreCase(gRoute.getRouteShortName())) { return WEST_LOOP_COUNTER_CLOCKWISE;	}
+		if (RSN_3A.equalsIgnoreCase(gRoute.getRouteShortName())) { return EAST_LOOP_CLOCKWISE;	}
+		if (RSN_3B.equalsIgnoreCase(gRoute.getRouteShortName())) { return EAST_LOOP_COUNTER_CLOCKWISE;	}
+		if (RSN_4.equalsIgnoreCase(gRoute.getRouteShortName())) { return YORK; }
+		if (RSN_5.equalsIgnoreCase(gRoute.getRouteShortName())) { return GORDON; }
+		if (RSN_6.equalsIgnoreCase(gRoute.getRouteShortName())) { return HARVARD_IRONWOOD; }
+		if (RSN_7.equalsIgnoreCase(gRoute.getRouteShortName())) { return KORTRIGHT_DOWNEY; }
+		if (RSN_8.equalsIgnoreCase(gRoute.getRouteShortName())) { return STONE_ROAD_MALL; }
+		if (RSN_9.equalsIgnoreCase(gRoute.getRouteShortName())) { return WATERLOO; }
+		if (RSN_10.equalsIgnoreCase(gRoute.getRouteShortName())) { return IMPERIAL; }
+		if (RSN_11.equalsIgnoreCase(gRoute.getRouteShortName())) { return WILLOW_WEST; }
+		if (RSN_12.equalsIgnoreCase(gRoute.getRouteShortName())) { return GENERAL_HOSPITAL; }
+		if (RSN_13.equalsIgnoreCase(gRoute.getRouteShortName())) { return VICTORIA_ROAD_RECREATION_CENTRE; }
+		if (RSN_14.equalsIgnoreCase(gRoute.getRouteShortName())) { return GRANGE; }
+		if (RSN_15.equalsIgnoreCase(gRoute.getRouteShortName())) { return UNIVERSITY_COLLEGE; }
+		if (RSN_16.equalsIgnoreCase(gRoute.getRouteShortName())) { return SOUTHGATE; }
+		if (RSN_20.equalsIgnoreCase(gRoute.getRouteShortName())) { return NORTHWEST_INDUSTRIAL; }
+		if (RSN_50.equalsIgnoreCase(gRoute.getRouteShortName())) { return STONE_ROAD_EXPRESS; }
+		if (RSN_56.equalsIgnoreCase(gRoute.getRouteShortName())) { return VICTORIA_EXPRESS; }
+		if (RSN_57.equalsIgnoreCase(gRoute.getRouteShortName())) { return HARVARD_EXPRESS; }
+		if (RSN_58.equalsIgnoreCase(gRoute.getRouteShortName())) { return EDINBURGH_EXPRESS; }
 		// @formatter:on
-		System.out.println("getRouteLongName() > Unexpected route short name '" + gRoute.route_short_name + "' (" + gRoute + ")");
+		System.out.println("getRouteLongName() > Unexpected route short name '" + gRoute.getRouteShortName() + "' (" + gRoute + ")");
 		System.exit(-1);
 		return null;
 	}
@@ -228,36 +228,36 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public String getRouteColor(GRoute gRoute) {
-		if (ROUTE_GORDON_CORRIDOR.equals(gRoute.route_id)) {
+		if (ROUTE_GORDON_CORRIDOR.equals(gRoute.getRouteId())) {
 			return null;
 		}
 		// @formatter:off
-		if (RSN_1A.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_F57215; }
-		if (RSN_1B.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_F57215; }
-		if (RSN_2A.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_3D3A9B; }
-		if (RSN_2B.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_3D3A9B; }
-		if (RSN_3A.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_0A904B; }
-		if (RSN_3B.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_0A904B; }
-		if (RSN_4.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_A52D84;	}
-		if (RSN_5.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_90191E; }
-		if (RSN_6.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_6BA630; }
-		if (RSN_7.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_5F2490; }
-		if (RSN_8.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_00ADEF; }
-		if (RSN_9.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_F9A720; }
-		if (RSN_10.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_EC008C; }
-		if (RSN_11.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_5A74B4; }
-		if (RSN_12.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_007C8E; }
-		if (RSN_13.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_ED1C24; }
-		if (RSN_14.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_475683; }
-		if (RSN_15.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_F2E827; }
-		if (RSN_16.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_9E7C3E; }
-		if (RSN_20.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_4B6639; }
-		if (RSN_50.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_00ADEF; }
-		if (RSN_56.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_8D319D; }
-		if (RSN_57.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_ED1C24; }
-		if (RSN_58.equalsIgnoreCase(gRoute.route_short_name)) { return COLOR_66C530; }
+		if (RSN_1A.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_F57215; }
+		if (RSN_1B.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_F57215; }
+		if (RSN_2A.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_3D3A9B; }
+		if (RSN_2B.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_3D3A9B; }
+		if (RSN_3A.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_0A904B; }
+		if (RSN_3B.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_0A904B; }
+		if (RSN_4.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_A52D84;	}
+		if (RSN_5.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_90191E; }
+		if (RSN_6.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_6BA630; }
+		if (RSN_7.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_5F2490; }
+		if (RSN_8.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_00ADEF; }
+		if (RSN_9.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_F9A720; }
+		if (RSN_10.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_EC008C; }
+		if (RSN_11.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_5A74B4; }
+		if (RSN_12.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_007C8E; }
+		if (RSN_13.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_ED1C24; }
+		if (RSN_14.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_475683; }
+		if (RSN_15.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_F2E827; }
+		if (RSN_16.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_9E7C3E; }
+		if (RSN_20.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_4B6639; }
+		if (RSN_50.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_00ADEF; }
+		if (RSN_56.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_8D319D; }
+		if (RSN_57.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_ED1C24; }
+		if (RSN_58.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_66C530; }
 		// @formatter:on
-		System.out.println("getRouteColor() > Unexpected route short name '" + gRoute.route_short_name + "' (" + gRoute + ")");
+		System.out.println("getRouteColor() > Unexpected route short name '" + gRoute.getRouteShortName() + "' (" + gRoute + ")");
 		System.exit(-1);
 		return null;
 	}
@@ -266,7 +266,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public void setTripHeadsign(MRoute mRoute, MTrip mTrip, GTrip gTrip, GSpec gtfs) {
-		String gTripHeadsign = gTrip.trip_headsign;
+		String gTripHeadsign = gTrip.getTripHeadsign();
 		int indexOfDASH = gTripHeadsign.indexOf(DASH);
 		if (indexOfDASH >= 0) {
 			gTripHeadsign = gTripHeadsign.substring(indexOfDASH + 1);
@@ -313,13 +313,13 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 
 	@Override
 	public int getStopId(GStop gStop) {
-		if (gStop.stop_code != null && gStop.stop_code.length() > 0 && Utils.isDigitsOnly(gStop.stop_code)) {
-			return Integer.valueOf(gStop.stop_code);
+		if (gStop.getStopCode() != null && gStop.getStopCode().length() > 0 && Utils.isDigitsOnly(gStop.getStopCode())) {
+			return Integer.valueOf(gStop.getStopCode());
 		}
-		int indexOfDASH = gStop.stop_id.indexOf(DASH);
-		int indexOfUNDERSCORE = gStop.stop_id.indexOf(UNDERSCORE, indexOfDASH);
+		int indexOfDASH = gStop.getStopId().indexOf(DASH);
+		int indexOfUNDERSCORE = gStop.getStopId().indexOf(UNDERSCORE, indexOfDASH);
 		if (indexOfDASH >= 0 && indexOfUNDERSCORE >= 0) {
-			return Integer.valueOf(gStop.stop_id.substring(indexOfDASH + 1, indexOfUNDERSCORE));
+			return Integer.valueOf(gStop.getStopId().substring(indexOfDASH + 1, indexOfUNDERSCORE));
 		}
 		System.out.println("Error while getting stop ID for " + gStop + " !");
 		System.exit(-1);
