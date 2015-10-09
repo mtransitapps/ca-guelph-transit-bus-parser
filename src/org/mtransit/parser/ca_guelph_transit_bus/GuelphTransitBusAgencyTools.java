@@ -273,17 +273,17 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 		}
 		int directionId = 0;
 		String stationName = cleanTripHeadsign(gTripHeadsign);
-		if (mRoute.id == 12l) {
+		if (mRoute.getId() == 12l) {
 			stationName = GENERAL_HOSPITAL;
-		} else if (mRoute.id == 16l) {
+		} else if (mRoute.getId() == 16l) {
 			stationName = SOUTHGATE;
-		} else if (mRoute.id == 50l) {
+		} else if (mRoute.getId() == 50l) {
 			stationName = STONE_ROAD_EXPRESS;
-		} else if (mRoute.id == 56l) {
+		} else if (mRoute.getId() == 56l) {
 			stationName = VICTORIA_EXPRESS;
-		} else if (mRoute.id == 57l) {
+		} else if (mRoute.getId() == 57l) {
 			stationName = HARVARD_EXPRESS;
-		} else if (mRoute.id == 58l) {
+		} else if (mRoute.getId() == 58l) {
 			stationName = EDINBURGH_EXPRESS;
 		}
 		mTrip.setHeadsignString(stationName, directionId);
@@ -294,15 +294,13 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 		return CleanUtils.cleanLabel(tripHeadsign);
 	}
 
-	private static final Pattern AT = Pattern.compile("( at )", Pattern.CASE_INSENSITIVE);
-	private static final String AT_REPLACEMENT = " / ";
 
 	private static final Pattern CLEAN_DEPART_ARRIVE = Pattern.compile("( (arrival|depart)$)", Pattern.CASE_INSENSITIVE);
 
 	@Override
 	public String cleanStopName(String gStopName) {
 		gStopName = CleanUtils.removePoints(gStopName);
-		gStopName = AT.matcher(gStopName).replaceAll(AT_REPLACEMENT);
+		gStopName = CleanUtils.CLEAN_AT.matcher(gStopName).replaceAll(CleanUtils.CLEAN_AT_REPLACEMENT);
 		gStopName = CLEAN_DEPART_ARRIVE.matcher(gStopName).replaceAll(StringUtils.EMPTY);
 		gStopName = CleanUtils.cleanNumbers(gStopName);
 		gStopName = CleanUtils.cleanStreetTypes(gStopName);
