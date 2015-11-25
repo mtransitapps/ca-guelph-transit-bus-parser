@@ -85,23 +85,27 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 	@Override
 	public long getRouteId(GRoute gRoute) {
 		if (ROUTE_GORDON_CORRIDOR.equals(gRoute.getRouteId())) {
-			return 9999;
+			return 9999l;
 		}
 		String routeShortName = gRoute.getRouteShortName();
 		if (routeShortName != null && routeShortName.length() > 0 && Utils.isDigitsOnly(routeShortName)) {
 			return Integer.valueOf(routeShortName); // using stop code as stop ID
 		}
 		Matcher matcher = DIGITS.matcher(routeShortName);
-		matcher.find();
+		if (!matcher.find()) {
+			System.out.printf("\nCan't find route ID digits for %s (%s)!\n", routeShortName, gRoute);
+			System.exit(-1);
+			return -1l;
+		}
 		int digits = Integer.parseInt(matcher.group());
 		if (routeShortName.endsWith(A)) {
-			return 1000 + digits;
+			return 1000l + digits;
 		} else if (routeShortName.endsWith(B)) {
-			return 2000 + digits;
+			return 2000l + digits;
 		} else {
-			System.out.println("Can't find route ID for " + routeShortName + " (" + gRoute + ")");
+			System.out.printf("\nCan't find route ID for %s (%s)!\n", routeShortName, gRoute);
 			System.exit(-1);
-			return -1;
+			return -1l;
 		}
 	}
 
@@ -163,40 +167,48 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 	private static final String RSN_1B = "1B";
 	private static final String RSN_1A = "1A";
 
+	private static final Pattern STARTS_WITH_ROUTE_RSN = Pattern.compile("(route[\\d]*[A-Z]*[\\-]?[\\s]*)", Pattern.CASE_INSENSITIVE);
+
 	@Override
 	public String getRouteLongName(GRoute gRoute) {
-		if (ROUTE_GORDON_CORRIDOR.equals(gRoute.getRouteId())) {
-			return GORDON_CORRIDOR;
+		String routeLongName = gRoute.getRouteLongName();
+		routeLongName = STARTS_WITH_ROUTE_RSN.matcher(routeLongName).replaceAll(StringUtils.EMPTY);
+		if (StringUtils.isEmpty(routeLongName)) {
+			if (ROUTE_GORDON_CORRIDOR.equals(gRoute.getRouteId())) {
+				return GORDON_CORRIDOR;
+			}
+			// @formatter:off
+			if (RSN_1A.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLLEGE_EDINBURGH_CLOCKWISE;	}
+			if (RSN_1B.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLLEGE_EDINBURGH_COUNTER_CLOCKWISE;	}
+			if (RSN_2A.equalsIgnoreCase(gRoute.getRouteShortName())) { return WEST_LOOP_CLOCKWISE;	}
+			if (RSN_2B.equalsIgnoreCase(gRoute.getRouteShortName())) { return WEST_LOOP_COUNTER_CLOCKWISE;	}
+			if (RSN_3A.equalsIgnoreCase(gRoute.getRouteShortName())) { return EAST_LOOP_CLOCKWISE;	}
+			if (RSN_3B.equalsIgnoreCase(gRoute.getRouteShortName())) { return EAST_LOOP_COUNTER_CLOCKWISE;	}
+			if (RSN_4.equalsIgnoreCase(gRoute.getRouteShortName())) { return YORK; }
+			if (RSN_5.equalsIgnoreCase(gRoute.getRouteShortName())) { return GORDON; }
+			if (RSN_6.equalsIgnoreCase(gRoute.getRouteShortName())) { return HARVARD_IRONWOOD; }
+			if (RSN_7.equalsIgnoreCase(gRoute.getRouteShortName())) { return KORTRIGHT_DOWNEY; }
+			if (RSN_8.equalsIgnoreCase(gRoute.getRouteShortName())) { return STONE_ROAD_MALL; }
+			if (RSN_9.equalsIgnoreCase(gRoute.getRouteShortName())) { return WATERLOO; }
+			if (RSN_10.equalsIgnoreCase(gRoute.getRouteShortName())) { return IMPERIAL; }
+			if (RSN_11.equalsIgnoreCase(gRoute.getRouteShortName())) { return WILLOW_WEST; }
+			if (RSN_12.equalsIgnoreCase(gRoute.getRouteShortName())) { return GENERAL_HOSPITAL; }
+			if (RSN_13.equalsIgnoreCase(gRoute.getRouteShortName())) { return VICTORIA_ROAD_RECREATION_CENTRE; }
+			if (RSN_14.equalsIgnoreCase(gRoute.getRouteShortName())) { return GRANGE; }
+			if (RSN_15.equalsIgnoreCase(gRoute.getRouteShortName())) { return UNIVERSITY_COLLEGE; }
+			if (RSN_16.equalsIgnoreCase(gRoute.getRouteShortName())) { return SOUTHGATE; }
+			if (RSN_20.equalsIgnoreCase(gRoute.getRouteShortName())) { return NORTHWEST_INDUSTRIAL; }
+			if (RSN_50.equalsIgnoreCase(gRoute.getRouteShortName())) { return STONE_ROAD_EXPRESS; }
+			if (RSN_56.equalsIgnoreCase(gRoute.getRouteShortName())) { return VICTORIA_EXPRESS; }
+			if (RSN_57.equalsIgnoreCase(gRoute.getRouteShortName())) { return HARVARD_EXPRESS; }
+			if (RSN_58.equalsIgnoreCase(gRoute.getRouteShortName())) { return EDINBURGH_EXPRESS; }
+			// @formatter:on
+			System.out.printf("\ngetRouteLongName() > Unexpected route short name '%s' (%s)!\n", gRoute.getRouteShortName(), gRoute);
+			System.exit(-1);
+			return null;
+		} else {
+			return CleanUtils.cleanLabel(routeLongName);
 		}
-		// @formatter:off
-		if (RSN_1A.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLLEGE_EDINBURGH_CLOCKWISE;	}
-		if (RSN_1B.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLLEGE_EDINBURGH_COUNTER_CLOCKWISE;	}
-		if (RSN_2A.equalsIgnoreCase(gRoute.getRouteShortName())) { return WEST_LOOP_CLOCKWISE;	}
-		if (RSN_2B.equalsIgnoreCase(gRoute.getRouteShortName())) { return WEST_LOOP_COUNTER_CLOCKWISE;	}
-		if (RSN_3A.equalsIgnoreCase(gRoute.getRouteShortName())) { return EAST_LOOP_CLOCKWISE;	}
-		if (RSN_3B.equalsIgnoreCase(gRoute.getRouteShortName())) { return EAST_LOOP_COUNTER_CLOCKWISE;	}
-		if (RSN_4.equalsIgnoreCase(gRoute.getRouteShortName())) { return YORK; }
-		if (RSN_5.equalsIgnoreCase(gRoute.getRouteShortName())) { return GORDON; }
-		if (RSN_6.equalsIgnoreCase(gRoute.getRouteShortName())) { return HARVARD_IRONWOOD; }
-		if (RSN_7.equalsIgnoreCase(gRoute.getRouteShortName())) { return KORTRIGHT_DOWNEY; }
-		if (RSN_8.equalsIgnoreCase(gRoute.getRouteShortName())) { return STONE_ROAD_MALL; }
-		if (RSN_9.equalsIgnoreCase(gRoute.getRouteShortName())) { return WATERLOO; }
-		if (RSN_10.equalsIgnoreCase(gRoute.getRouteShortName())) { return IMPERIAL; }
-		if (RSN_11.equalsIgnoreCase(gRoute.getRouteShortName())) { return WILLOW_WEST; }
-		if (RSN_12.equalsIgnoreCase(gRoute.getRouteShortName())) { return GENERAL_HOSPITAL; }
-		if (RSN_13.equalsIgnoreCase(gRoute.getRouteShortName())) { return VICTORIA_ROAD_RECREATION_CENTRE; }
-		if (RSN_14.equalsIgnoreCase(gRoute.getRouteShortName())) { return GRANGE; }
-		if (RSN_15.equalsIgnoreCase(gRoute.getRouteShortName())) { return UNIVERSITY_COLLEGE; }
-		if (RSN_16.equalsIgnoreCase(gRoute.getRouteShortName())) { return SOUTHGATE; }
-		if (RSN_20.equalsIgnoreCase(gRoute.getRouteShortName())) { return NORTHWEST_INDUSTRIAL; }
-		if (RSN_50.equalsIgnoreCase(gRoute.getRouteShortName())) { return STONE_ROAD_EXPRESS; }
-		if (RSN_56.equalsIgnoreCase(gRoute.getRouteShortName())) { return VICTORIA_EXPRESS; }
-		if (RSN_57.equalsIgnoreCase(gRoute.getRouteShortName())) { return HARVARD_EXPRESS; }
-		if (RSN_58.equalsIgnoreCase(gRoute.getRouteShortName())) { return EDINBURGH_EXPRESS; }
-		// @formatter:on
-		System.out.println("getRouteLongName() > Unexpected route short name '" + gRoute.getRouteShortName() + "' (" + gRoute + ")");
-		System.exit(-1);
-		return null;
 	}
 
 	private static final String AGENCY_COLOR = "00A6E5"; // BLUE
@@ -257,7 +269,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 		if (RSN_57.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_ED1C24; }
 		if (RSN_58.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_66C530; }
 		// @formatter:on
-		System.out.println("getRouteColor() > Unexpected route short name '" + gRoute.getRouteShortName() + "' (" + gRoute + ")");
+		System.out.printf("\ngetRouteColor() > Unexpected route short name '%s' (%s)!\n", gRoute.getRouteShortName(), gRoute);
 		System.exit(-1);
 		return null;
 	}
@@ -271,29 +283,34 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 		if (indexOfDASH >= 0) {
 			gTripHeadsign = gTripHeadsign.substring(indexOfDASH + 1);
 		}
-		int directionId = 0;
-		String stationName = cleanTripHeadsign(gTripHeadsign);
+		int directionId = gTrip.getDirectionId() == null ? 0 : gTrip.getDirectionId();
 		if (mRoute.getId() == 12l) {
-			stationName = GENERAL_HOSPITAL;
+			mTrip.setHeadsignString(GENERAL_HOSPITAL, directionId);
+			return;
 		} else if (mRoute.getId() == 16l) {
-			stationName = SOUTHGATE;
+			mTrip.setHeadsignString(SOUTHGATE, directionId);
+			return;
 		} else if (mRoute.getId() == 50l) {
-			stationName = STONE_ROAD_EXPRESS;
+			mTrip.setHeadsignString(STONE_ROAD_EXPRESS, directionId);
+			return;
 		} else if (mRoute.getId() == 56l) {
-			stationName = VICTORIA_EXPRESS;
+			mTrip.setHeadsignString(VICTORIA_EXPRESS, directionId);
+			return;
 		} else if (mRoute.getId() == 57l) {
-			stationName = HARVARD_EXPRESS;
+			mTrip.setHeadsignString(HARVARD_EXPRESS, directionId);
+			return;
 		} else if (mRoute.getId() == 58l) {
-			stationName = EDINBURGH_EXPRESS;
+			mTrip.setHeadsignString(EDINBURGH_EXPRESS, directionId);
+			return;
 		}
-		mTrip.setHeadsignString(stationName, directionId);
+		mTrip.setHeadsignString(cleanTripHeadsign(gTripHeadsign), directionId);
 	}
 
 	@Override
 	public String cleanTripHeadsign(String tripHeadsign) {
+		tripHeadsign = CleanUtils.cleanStreetTypes(tripHeadsign);
 		return CleanUtils.cleanLabel(tripHeadsign);
 	}
-
 
 	private static final Pattern CLEAN_DEPART_ARRIVE = Pattern.compile("( (arrival|depart)$)", Pattern.CASE_INSENSITIVE);
 
@@ -319,7 +336,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 		if (indexOfDASH >= 0 && indexOfUNDERSCORE >= 0) {
 			return Integer.valueOf(gStop.getStopId().substring(indexOfDASH + 1, indexOfUNDERSCORE));
 		}
-		System.out.println("Error while getting stop ID for " + gStop + " !");
+		System.out.printf("\nError while getting stop ID for %s!\n", gStop);
 		System.exit(-1);
 		return -1;
 	}
