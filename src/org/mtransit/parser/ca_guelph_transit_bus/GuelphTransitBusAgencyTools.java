@@ -421,13 +421,13 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						"Route5-0520_Frederick Dr. at Waterford Dr.", //
 								"Route5-0528_Gordon St. at Lowes Rd.", //
 								"Route5-0538_University Centre Arrive", //
-								"Route5-0507_University Centre", //
 								"Route5-0546_Guelph Central Station" })) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route5-0500_Guelph Central Station", //
 								"Route5-0503_Gordon St. at Water St.", //
 								"Route5-0507_University Centre Arrive", //
+								"Route5-0507_University Centre", //
 								"Route5-0520_Frederick Dr. at Waterford Dr." })) //
 				.compileBothTripSort());
 		map2.put(6l, new RouteTripSpec(6l, //
