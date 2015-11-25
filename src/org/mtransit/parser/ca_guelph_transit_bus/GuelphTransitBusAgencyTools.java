@@ -536,10 +536,11 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route13-1300_Guelph Central Station", //
 								"Route13-1311_Cassino Ave. at William St.", //
-								"Route13-1323_Victoria Rd. N. at Greenview St." })) //
+								"Route13-1318_Starwood Dr. at Watt St." })) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route13-1323_Victoria Rd. N. at Greenview St.", //
+						"Route13-1318_Starwood Dr. at Watt St.", //
+								"Route13-1323_Victoria Rd. N. at Greenview St.", //
 								"Route13-1327_Eramosa Rd. at Metcalfe St.", //
 								"Route13-1330_Guelph Central Station" })) //
 				.compileBothTripSort());
