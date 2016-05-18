@@ -300,12 +300,14 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 								"Route Gordon Corridor-18_Gordon St. at Valley Rd.", //
 								"Route Gordon Corridor-24_Gordon St. at Monticello Cres.", //
 								"Route Gordon Corridor-25_Gordon St. at South Ring Rd. E.", //
-								"Route Gordon Corridor-25_University Centre" })) //
+								"Route Gordon Corridor-25_University Centre" //
+						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route Gordon Corridor-0_University Dep", //
 								"Route Gordon Corridor-5_1155 Gordon St.", //
-								"Route Gordon Corridor-11_Gosling Gardens at Clair Rd. W." })) //
+								"Route Gordon Corridor-11_Gosling Gardens at Clair Rd. W." //
+						})) //
 				.compileBothTripSort());
 		map2.put(1l + RID_STARTS_WITH_A, new RouteTripSpec(1l + RID_STARTS_WITH_A, // 1A
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
@@ -314,12 +316,14 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route1A-0115_181 Janefield Ave.", //
 								"Route1A-0119_50 College Ave. W.", //
-								"Route1A-0123_UC South Loop Plat2" })) //
+								"Route1A-0123_UC South Loop Plat2" //
+						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route1A-0100_UC South Loop Plat3", //
 								"Route1A-0112_Edinburgh Rd. S. at Laurelwood Crt.", //
-								"Route1A-0115_181 Janefield Ave." })) //
+								"Route1A-0115_181 Janefield Ave." //
+						})) //
 				.compileBothTripSort());
 		map2.put(1l + RID_STARTS_WITH_B, new RouteTripSpec(1l + RID_STARTS_WITH_B, // 1B
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
@@ -328,42 +332,54 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route1B-0162_583 Edinburgh Rd. S.", //
 								"Route1B-0168_Gordon St. at Valley Rd.", //
-								"Route1B-0175_University Centre" })) //
+								"Route1B-0175_UC South Loop Plat1" //
+						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route1B-0150_University Centre",//
+						"Route1B-0150_UC South Loop Plat5",//
 								"Route1B-0157_129 Janefield Ave.", //
-								"Route1B-0162_583 Edinburgh Rd. S." })) //
+								"Route1B-0162_583 Edinburgh Rd. S." //
+						})) //
 				.compileBothTripSort());
 		map2.put(2l + RID_STARTS_WITH_A, new RouteTripSpec(2l + RID_STARTS_WITH_A, // 2A
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
 				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
 				.addTripSort(MDirectionType.EAST.intValue(), //
 						Arrays.asList(new String[] { //
-						"2A-0216_Elmira Rd. at Zehrs Depart", //
-								"2A-0237_Woolwich St. at Tiffany St.", //
-								"2A-0241_Guelph Central Station" })) //
+						"Route2A-0216_Elmira Rd. at Zehrs", //
+								"Route2A-0216_Elmira Rd. at Zehrs Depart", //
+								"Route2A-0237_Woolwich St. at Tiffany St.", //
+								"Route2A-0241_GCS East Plat1" //
+						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"2A-0200_Guelph Central Station", //
-								"2A-0203_Gordon St. at Forbes Ave.", //
-								"2A-0206_University Centre Arrive", //
-								"2A-0216_Elmira Rd. at Zehrs Depart" })) //
+						"Route2A-0200_GCS East Plat1", //
+								"Route2A-0203_Gordon St. at Forbes Ave.", //
+								"Route2A-0206_UC North Loop Plat10", //
+								"Route2A-0207_Stone Rd. W. at Edinburgh Rd. S. - WB", //
+								"Route2A-0210_Fife Rd. at Wellington St. W.", //
+								"Route2A-0216_Elmira Rd. at Zehrs", //
+								"Route2A-0216_Elmira Rd. at Zehrs Depart" //
+						})) //
 				.compileBothTripSort());
 		map2.put(2l + RID_STARTS_WITH_B, new RouteTripSpec(2l + RID_STARTS_WITH_B, // 2B
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
 				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
 				.addTripSort(MDirectionType.EAST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route2B-0279_Elmira Rd.at Paisley Depart", //
-								"Route2B-0291_University Centre Arrive", //
-								"Route2B-0298_Guelph Central Station" })) //
+						"Route2B-0279_Elmira Rd.at Paisley Arrival", //
+								"Route2B-0279_Elmira Rd.at Paisley Depart", //
+								"Route2B-0291_UC North Plat7", //
+								"Route2B-0298_GCS West Plat14" //
+						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route2B-0250_Guelph Central Station", //
+						"Route2B-0250_GCS West Plat14", //
 								"Route2B-0259_Woolwich St. at Evergreen", //
 								"Route2B-0268_Woodlawn Rd. W. at Royal Rd.", //
-								"Route2B-0279_Elmira Rd.at Paisley Depart" })) //
+								"Route2B-0279_Elmira Rd.at Paisley Arrival", //
+								"Route2B-0279_Elmira Rd.at Paisley Depart" //
+						})) //
 				.compileBothTripSort());
 		map2.put(3l + RID_STARTS_WITH_A, new RouteTripSpec(3l + RID_STARTS_WITH_A, // 3A
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
@@ -374,12 +390,14 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 								"Route3A-0306_Yorkshire St. N. at London Rd. W.", //
 								"Route3A-0313_Nicklin Rd. at Woodlawn Rd. Depart", //
 								"Route3A-0327_Eastview Rd. at Glenburnie Dr. Depart", //
-								"Route3A-0333_Watson Pkwy N. at Library" })) //
+								"Route3A-0333_Watson Pkwy N. at Library" //
+						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route3A-0333_Watson Pkwy N. at Library", //
 								"Route3A-0341_UC North Plat9 Arrive", //
-								"Route3A-0349_GCS East Plat5" })) //
+								"Route3A-0349_GCS East Plat5" //
+						})) //
 				.compileBothTripSort());
 		map2.put(3l + RID_STARTS_WITH_B, new RouteTripSpec(3l + RID_STARTS_WITH_B, // 3B
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
@@ -389,7 +407,8 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						"Route3B-0350_GCS Mid Plat6", //
 								"Route3B-0353_Gordon St. at Water St.", //
 								"Route3B-0357_UC South Plat6 Arr", //
-								"Route3B-0365_Watson Pkwy. N. opposite Library" })) //
+								"Route3B-0365_Watson Pkwy. N. opposite Library" //
+						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route3B-0365_Watson Pkwy. N. opposite Library", //
@@ -397,21 +416,24 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 								"Route3B-0373_211 Victoria Rd. N.", //
 								"Route3B-0378_Victoria Rd. N. opposite Trillium Waldorf", //
 								"Route3B-0393_Westmount Rd. at London Rd. W.", //
-								"Route3B-0399_GCS Mid Plat6" })) //
+								"Route3B-0399_GCS Mid Plat6" //
+						})) //
 				.compileBothTripSort());
 		map2.put(4l, new RouteTripSpec(4l, //
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
 				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
 				.addTripSort(MDirectionType.EAST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route4-400_Guelph Central Station", //
-								"Route4-408_535 York Rd. at Tim Hortons", //
-								"Route4-416_Watson Rd. S. at Guelph Transit Centre" })) //
+						"Route4-0400_GCS East Plat21", //
+								"Route4-0408_535 York Rd. at Tim Hortons", //
+								"Route4-0416_Watson Rd. S. at Guelph Transit Centre" //
+						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route4-417_Watson Pkwy. S. at Dunlop Dr.", //
-								"Route4-423_York Rd. at Beaumont Cres.", //
-								"Route4-430_Guelph Central Station" })) //
+						"Route4-0417_Watson Pkwy. S. at Dunlop Dr.", //
+								"Route4-0423_York Rd. at Beaumont Cres.", //
+								"Route4-0430_GCS East Plat3" //
+						})) //
 				.compileBothTripSort());
 		map2.put(5l, new RouteTripSpec(5l, //
 				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), //
@@ -420,15 +442,19 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route5-0520_Frederick Dr. at Waterford Dr.", //
 								"Route5-0528_Gordon St. at Lowes Rd.", //
-								"Route5-0538_University Centre Arrive", //
-								"Route5-0546_Guelph Central Station" })) //
+								"Route5-0538_UC South Loop Plat4", //
+								"Route5-0546_GCS East Plat22" //
+						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route5-0500_Guelph Central Station", //
+						"Route5-0500_GCS East Plat4", //
 								"Route5-0503_Gordon St. at Water St.", //
-								"Route5-0507_University Centre Arrive", //
-								"Route5-0507_University Centre", //
-								"Route5-0520_Frederick Dr. at Waterford Dr." })) //
+								"Route5-0507_UC North Loop Plat8", // ==
+								"Route5-0548_Victoria Road South at Macalister Boulevard", "Route5-5602_ 1035 Victoria Road", // !=
+								"Route5-0508_Gordon St. at Stone Rd. W.", "Route5-0515_Arkell Rd. at Ridgeway Ave.", // !=
+								"Route5-0516_Summerfield Dr. at Amsterdam Cres.", // ==
+								"Route5-0520_Frederick Dr. at Waterford Dr." //
+						})) //
 				.compileBothTripSort());
 		map2.put(6l, new RouteTripSpec(6l, //
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
@@ -438,12 +464,15 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						"Route6-0613_Ironwood Rd. at Hilldale Cres.", //
 								"Route6-0618_692 Scottsdale Dr.", //
 								"Route6-0622_Youngman Dr. at Harvard Rd.",//
-								"Route6-0627_UC South Loop Plat3" })) //
+								"Route6-0628_632 Scottsdale Dr.", //
+								"Route6-0627_UC South Loop Plat3" //
+						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route6-0600_UC South Loop Plat2",//
 								"Route6-0606_Edinburgh Rd. at Laurelwood Crt.", //
-								"Route6-0613_Ironwood Rd. at Hilldale Cres." })) //
+								"Route6-0613_Ironwood Rd. at Hilldale Cres." //
+						})) //
 				.compileBothTripSort());
 		map2.put(7l, new RouteTripSpec(7l, //
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
@@ -452,12 +481,14 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route7-0713_Ptarmigan Dr. at Downey Rd.", //
 								"Route7-0719_Kortright Rd. at Edinburgh Rd. S.", //
-								"Route7-0725_UC South Loop Plat5" })) //
+								"Route7-0724_UC South Loop Plat5" //
+						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route7-0700_UC South Loop Plat1", //
 								"Route7-0709_Downey Rd. at Woodland Glen Dr.", //
-								"Route7-0713_Ptarmigan Dr. at Downey Rd." })) //
+								"Route7-0712_Ptarmigan Dr. at Downey Rd." //
+						})) //
 				.compileBothTripSort());
 		map2.put(8l, new RouteTripSpec(8l, //
 				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), //
@@ -466,12 +497,14 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route8-0812_Janefield Ave. at Scottsdale Dr.", //
 								"Route8-0820_Edinburgh Rd. S. at Municipal St.", //
-								"Route8-0827_Guelph Central Station" })) //
+								"Route8-0827_GCS East Plat19" //
+						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route8-0800_Guelph Central Station", //
+						"Route8-0800_GCS Mid Plat7", //
 								"Route8-0806_Maple St. at Forest St.", //
-								"Route8-0812_Janefield Ave. at Scottsdale Dr." })) //
+								"Route8-0812_Janefield Ave. at Scottsdale Dr." //
+						})) //
 				.compileBothTripSort());
 		map2.put(9l, new RouteTripSpec(9l, //
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
@@ -480,12 +513,14 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route9-0915_Imperial Rd. at West Acres Dr.", //
 								"Route9-0920_180 Waterloo Ave.", //
-								"Route9-0924_Guelph Central Station" })) //
+								"Route9-0924_GCS East Plat18" //
+						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route9-0900_Guelph Central Station", //
+						"Route9-0900_GCS West Plat8", //
 								"Route9-0912_Paisley Rd. at Zehrs", //
-								"Route9-0915_Imperial Rd. at West Acres Dr." })) //
+								"Route9-0915_Imperial Rd. at West Acres Dr." //
+						})) //
 				.compileBothTripSort());
 		map2.put(10l, new RouteTripSpec(10l, //
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
@@ -494,12 +529,14 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route10-1019_Paisley Rd. at West Hill Estates", //
 								"Route10-1024_Paisley St. at Yorkshire St. N.", //
-								"Route10-1028_Guelph Central Station" })) //
+								"Route10-1028_GCS East Plat21" //
+						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route10-1000_Guelph Central Station", //
+						"Route10-1000_GCS East Plat3", //
 								"Route10-1009_Paisley Rd. at Heath Rd.", //
-								"Route10-1019_Paisley Rd. at West Hill Estates" })) //
+								"Route10-1019_Paisley Rd. at West Hill Estates" //
+						})) //
 				.compileBothTripSort());
 		map2.put(11l, new RouteTripSpec(11l, //
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
@@ -508,55 +545,63 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route11-1118_158 Willow Rd.", //
 								"Route11-1122_Paisley St. at Yorkshire St. N.", //
-								"Route11-1125_Guelph Central Station" })) //
+								"Route11-1125_GCS East Plat2" //
+						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route11-1100_Guelph Central Station", //
+						"Route11-1100_GCS West Plat15", //
 								"Route11-1109_Dawson Rd. at Shelldale Cres.", //
-								"Route11-1118_158 Willow Rd." })) //
+								"Route11-1118_158 Willow Rd." //
+						})) //
 				.compileBothTripSort());
 		map2.put(12l, new RouteTripSpec(12l, //
 				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), //
 				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.SOUTH.getId()) //
 				.addTripSort(MDirectionType.NORTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route12-1200_Guelph Central Station", //
+						"Route12-1200_GCS East Plat19", //
 								"Route12-1207_Emma St. at Metcalfe St.", //
-								"Route12-1215_Windsor St. at Kingsley Crt." })) //
+								"Route12-1215_Windsor St. at Kingsley Crt." //
+						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route12-1215_Windsor St. at Kingsley Crt.", //
 								"Route12-1222_Delhi St. at Emma St.", //
-								"Route12-1228_Guelph Central Station" })) //
+								"Route12-1228_GCS Mid Plat7" //
+						})) //
 				.compileBothTripSort());
 		map2.put(13l, new RouteTripSpec(13l, //
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
 				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
 				.addTripSort(MDirectionType.EAST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route13-1300_Guelph Central Station", //
+						"Route13-1300_GCS East Plat18", //
 								"Route13-1311_Cassino Ave. at William St.", //
-								"Route13-1318_Starwood Dr. at Watt St." })) //
+								"Route13-1318_Starwood Dr. at Watt St." //
+						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route13-1318_Starwood Dr. at Watt St.", //
 								"Route13-1323_Victoria Rd. N. at Greenview St.", //
 								"Route13-1327_Eramosa Rd. at Metcalfe St.", //
-								"Route13-1330_Guelph Central Station" })) //
+								"Route13-1330_GCS West Plat8" //
+						})) //
 				.compileBothTripSort());
 		map2.put(14l, new RouteTripSpec(14l, //
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
 				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
 				.addTripSort(MDirectionType.EAST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route14-1400_Guelph Central Station", //
+						"Route14-1400_GCS East Plat22", //
 								"Route14-1406_Grange Rd. at Victoria Rd. N.", //
-								"Route14-1412_Watson Pkwy. N. at Fleming Rd." })) //
+								"Route14-1412_Watson Pkwy. N. at Fleming Rd." //
+						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route14-1412_Watson Pkwy. N. at Fleming Rd.", //
 								"Route14-1419_Victoria Rd. N. at Grange Rd.", //
-								"Route14-1425_Guelph Central Station" })) //
+								"Route14-1425_GCS East Plat4" //
+						})) //
 				.compileBothTripSort());
 		map2.put(15l, new RouteTripSpec(15l, //
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
@@ -564,13 +609,17 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 				.addTripSort(MDirectionType.EAST.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route15-1508_College Ave. W. at Flanders Rd.", //
+								"Route15-1515_Stone Road Mall Depart", //
 								"Route15-1515_Stone Road Mall", //
-								"Route15-1521_University Centre" })) //
+								"Route15-1515_Stone Road Mall Arrive", //
+								"Route15-1521_UC South Loop Plat0" //
+						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route15-1500_University Centre", //
+						"Route15-1500_UC South Loop Plat0", //
 								"Route15-1504_Stone Rd. W. Edinburgh Rd. S.", //
-								"Route15-1508_College Ave. W. at Flanders Rd." })) //
+								"Route15-1508_College Ave. W. at Flanders Rd." //
+						})) //
 				.compileBothTripSort());
 		map2.put(16l, new RouteTripSpec(16l, //
 				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), //
@@ -579,13 +628,16 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route16-1631_300 Clair (Water Tower)", //
 								"Route16-1646_Gordon St. at Monticello Cres.", //
-								"Route16-1654_Guelph Central Station" })) //
+								"Route16-1654_GCS West Plat15" //
+						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route16-1600_Guelph Central Station", //
+						"Route16-1600_GCS East Plat2", //
 								"Route16-1605_Gordon St. at College Ave.", //
 								"Route16-1611_Gordon St. at Edinburgh Rd. S.", //
-								"Route16-1631_300 Clair (Water Tower)" })) //
+								"Route16-1630_829 Southgate Dr.", //
+								"Route16-1631_300 Clair (Water Tower)" //
+						})) //
 				.compileBothTripSort());
 		map2.put(20l, new RouteTripSpec(20l, //
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
@@ -595,13 +647,15 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						"Route20-2016_Across from 498 Governors Rd.", //
 								"Route20-2033_Silvercreek Pkwy N. at Campbell Rd.", //
 								"Route20-2040_26 Willow Rd.", //
-								"Route20-2046_Guelph Central Station" })) //
+								"Route20-2046_GCS East Plat20" //
+						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route20-2000_Guelph Central Station", //
+						"Route20-2000_GCS East Plat20", //
 								"Route20-2005_Willow West Mall", //
 								"Route20-2010_Willow Rd. at Flaherty Dr.", //
-								"Route20-2016_Across from 498 Governors Rd." })) //
+								"Route20-2016_Across from 498 Governors Rd." //
+						})) //
 				.compileBothTripSort());
 		map2.put(50l, new RouteTripSpec(50l, //
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
@@ -610,12 +664,14 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route50-5004_Stone Rd. W. Edinburgh Rd. S.", //
 								"Route50-5008_Scottsdale Dr. at Wilsonview Ave.", //
-								"Route50-5013_University Centre" })) //
+								"Route50-5013_University Centre" //
+						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route50-5000_University Dep", //
 								"Route50-5002_Stone Rd. W. at Fire Hall", //
-								"Route50-5004_Stone Rd. W. Edinburgh Rd. S." })) //
+								"Route50-5004_Stone Rd. W. Edinburgh Rd. S." //
+						})) //
 				.compileBothTripSort());
 		map2.put(56l, new RouteTripSpec(56l, //
 				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), //
@@ -624,12 +680,14 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route56-5604_Frederick Dr. at Waterford Dr.", //
 								"Route56-5610_Gordon St. at Landsdown Dr.", //
-								"Route56-5616_University Arr" })) //
+								"Route56-5616_University Arr" //
+						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route56-5600_University Dep", //
 								"Route56-5602_1035 Victoria", //
-								"Route56-5604_Frederick Dr. at Waterford Dr." })) //
+								"Route56-5604_Frederick Dr. at Waterford Dr." //
+						})) //
 				.compileBothTripSort());
 		map2.put(57l, new RouteTripSpec(57l, //
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
@@ -638,12 +696,14 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route57-5709_Scottsdale @ Stone", //
 								"Route57-5712_252 Stone Rd. W.", //
-								"Route57-5714_University Arr" })) //
+								"Route57-5714_University Arr" //
+						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route57-5700_University Dep", //
 								"Route57-5705_Harvard Rd. at Youngman Dr.", //
-								"Route57-5709_Scottsdale @ Stone" })) //
+								"Route57-5709_Scottsdale @ Stone" //
+						})) //
 				.compileBothTripSort());
 		map2.put(58l, new RouteTripSpec(58l, //
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
@@ -652,12 +712,14 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route58-5804_583 Edinburgh Rd. S.", //
 								"Route58-5808_Kortright Rd. opposite Yewholme Dr.", //
-								"Route58-5812_University Centre" })) //
+								"Route58-5812_University Centre" //
+						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route58-5800_University Dep", //
 								"Route58-5802_Stone Rd. W. at Fire Hall", //
-								"Route58-5804_583 Edinburgh Rd. S." })) //
+								"Route58-5804_583 Edinburgh Rd. S." //
+						})) //
 				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
 	}
