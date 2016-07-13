@@ -332,6 +332,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route1B-0162_583 Edinburgh Rd. S.", //
 								"Route1B-0168_Gordon St. at Valley Rd.", //
+								"Route1B-0174_Gordon St. at Monticello Cres.", //
 								"Route1B-0175_UC South Loop Plat1" //
 						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
@@ -545,6 +546,8 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route11-1118_158 Willow Rd.", //
 								"Route11-1122_Paisley St. at Yorkshire St. N.", //
+								"Route11-1130_St George's Square IF Shoe store", // ==
+								"Route11-1126_Guelph Central Station Platform 22", // !=
 								"Route11-1125_GCS East Plat2" //
 						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
@@ -600,6 +603,8 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route14-1412_Watson Pkwy. N. at Fleming Rd.", //
 								"Route14-1419_Victoria Rd. N. at Grange Rd.", //
+								"Route14-1424_Elizabeth St. at Red Chevron Club", // ==
+								"Route14-1426_Guelph Central Station Platform 15", // !=
 								"Route14-1425_GCS East Plat4" //
 						})) //
 				.compileBothTripSort());
@@ -628,6 +633,8 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route16-1631_300 Clair (Water Tower)", //
 								"Route16-1646_Gordon St. at Monticello Cres.", //
+								"Route16-1653_Wyndham St. at Fountain St.", // ==
+								"Route16-1655_ Guelph Central Station Platform 2", // !=
 								"Route16-1654_GCS West Plat15" //
 						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
