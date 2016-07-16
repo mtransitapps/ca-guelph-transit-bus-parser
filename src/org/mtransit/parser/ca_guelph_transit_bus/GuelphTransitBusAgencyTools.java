@@ -79,6 +79,11 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 	}
 
 	@Override
+	public boolean excludeRoute(GRoute gRoute) {
+		return super.excludeRoute(gRoute);
+	}
+
+	@Override
 	public Integer getAgencyRouteType() {
 		return MAgency.ROUTE_TYPE_BUS;
 	}
@@ -172,6 +177,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 	private static final String RSN_8 = "8";
 	private static final String RSN_7 = "7";
 	private static final String RSN_6 = "6";
+	private static final String RSN_5A = "5A";
 	private static final String RSN_5 = "5";
 	private static final String RSN_4 = "4";
 	private static final String RSN_3B = "3B";
@@ -200,6 +206,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 			if (RSN_3B.equalsIgnoreCase(gRoute.getRouteShortName())) { return EAST_LOOP_COUNTER_CLOCKWISE;	}
 			if (RSN_4.equalsIgnoreCase(gRoute.getRouteShortName())) { return YORK; }
 			if (RSN_5.equalsIgnoreCase(gRoute.getRouteShortName())) { return GORDON; }
+			if (RSN_5A.equalsIgnoreCase(gRoute.getRouteShortName())) { return GORDON; }
 			if (RSN_6.equalsIgnoreCase(gRoute.getRouteShortName())) { return HARVARD_IRONWOOD; }
 			if (RSN_7.equalsIgnoreCase(gRoute.getRouteShortName())) { return KORTRIGHT_DOWNEY; }
 			if (RSN_8.equalsIgnoreCase(gRoute.getRouteShortName())) { return STONE_ROAD_MALL; }
@@ -266,6 +273,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 		if (RSN_3B.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_0A904B; }
 		if (RSN_4.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_A52D84;	}
 		if (RSN_5.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_90191E; }
+		if (RSN_5A.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_90191E; }
 		if (RSN_6.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_6BA630; }
 		if (RSN_7.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_5F2490; }
 		if (RSN_8.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_00ADEF; }
@@ -444,17 +452,31 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						"Route5-0520_Frederick Dr. at Waterford Dr.", //
 								"Route5-0528_Gordon St. at Lowes Rd.", //
 								"Route5-0538_UC South Loop Plat4", //
-								"Route5-0546_GCS East Plat22" //
+								"Route5-0545_City Hall", //
+								"Route5-0546_GCS East Plat22", //
+								"Route5-547_Guelph Central Station Platform 4"//
 						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route5-0500_GCS East Plat4", //
 								"Route5-0503_Gordon St. at Water St.", //
 								"Route5-0507_UC North Loop Plat8", // ==
-								"Route5-0548_Victoria Road South at Macalister Boulevard", "Route5-5602_ 1035 Victoria Road", // !=
-								"Route5-0508_Gordon St. at Stone Rd. W.", "Route5-0515_Arkell Rd. at Ridgeway Ave.", // !=
+								"Route5-0548_Victoria Road South at Macalister Boulevard", //
+								"Route5-5602_ 1035 Victoria Road", // !=
+								"Route5-0508_Gordon St. at Stone Rd. W.", //
+								"Route5-0515_Arkell Rd. at Ridgeway Ave.", // !=
 								"Route5-0516_Summerfield Dr. at Amsterdam Cres.", // ==
 								"Route5-0520_Frederick Dr. at Waterford Dr." //
+						})) //
+				.compileBothTripSort());
+		map2.put(5l + RID_STARTS_WITH_A, new RouteTripSpec(5l + RID_STARTS_WITH_A, // 5A
+				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), //
+				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.SOUTH.getId()) //
+				.addTripSort(MDirectionType.NORTH.intValue(), //
+						Arrays.asList(new String[] { //
+						})) //
+				.addTripSort(MDirectionType.SOUTH.intValue(), //
+						Arrays.asList(new String[] { //
 						})) //
 				.compileBothTripSort());
 		map2.put(6l, new RouteTripSpec(6l, //
@@ -744,7 +766,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
 			return ALL_ROUTE_TRIPS2.get(mRoute.getId()).getAllTrips();
 		}
-		System.out.printf("\fUnexpected split trip (unexpected route ID: %s) %s", mRoute.getId(), gTrip);
+		System.out.printf("\nUnexpected split trip (unexpected route ID: %s) %s\n", mRoute.getId(), gTrip);
 		System.exit(-1);
 		return null;
 	}
