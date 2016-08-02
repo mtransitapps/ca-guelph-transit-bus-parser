@@ -474,9 +474,13 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.SOUTH.getId()) //
 				.addTripSort(MDirectionType.NORTH.intValue(), //
 						Arrays.asList(new String[] { //
+						"Route5A-0520_Frederick Dr. at Waterford Dr.", //
+								"Route5A-0546_GCS East Plat22" //
 						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
+						"Route5A-0500_GCS East Plat4", //
+								"Route5A-0520_Frederick Dr. at Waterford Dr." //
 						})) //
 				.compileBothTripSort());
 		map2.put(6l, new RouteTripSpec(6l, //
