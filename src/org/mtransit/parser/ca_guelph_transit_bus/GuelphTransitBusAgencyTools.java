@@ -31,6 +31,7 @@ import org.mtransit.parser.mt.data.MTripStop;
 // http://data.open.guelph.ca/
 // http://data.open.guelph.ca/dataset/guelph-transit-gtfs-data
 // http://data.open.guelph.ca/datafiles/guelph-transit/guelph_transit_gtfs.zip
+// http://guelph.ca/uploads/google/google_transit.zip
 public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 
 	public static void main(String[] args) {
@@ -322,16 +323,16 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
 				.addTripSort(MDirectionType.EAST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route1A-0115_181 Janefield Ave.", //
-								"Route1A-0119_50 College Ave. W.", //
-								"Route1A-0123_UC North Loop Plat8" //
+						"Route1A-115_181 Janefield Ave.", //
+								"Route1A-119_50 College Ave. W.", //
+								"Route1A-123_UC North Loop Plat8" //
 						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route1A-0100_UC North Loop Plat7", //
-								"Route1A-0111_Edinburgh Rd. S. at Koch Dr.", //
-								"Route1A-0112_Edinburgh Rd. S. at Laurelwood Crt.", //
-								"Route1A-0115_181 Janefield Ave." //
+						"Route1A-100_UC North Loop Plat7", //
+								"Route1A-111_Edinburgh Rd. S. at Koch Dr.", //
+								"Route1A-112_Edinburgh Rd. S. at Laurelwood Crt.", //
+								"Route1A-115_181 Janefield Ave." //
 						})) //
 				.compileBothTripSort());
 		map2.put(1l + RID_STARTS_WITH_B, new RouteTripSpec(1l + RID_STARTS_WITH_B, // 1B
@@ -369,6 +370,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 								"Route2A-0203_Gordon St. at James St.", //
 								"Route2A-0206_UC South Loop Plat01", //
 								"Route2A-0207_Stone Rd. W. at Edinburgh Rd. S. - WB", //
+								"Route2A-0209_659 Wellington St. W.", //
 								"Route2A-0210_Fife Rd. at Wellington St. W.", //
 								"Route2A-0216_Elmira Rd. at Zehrs", //
 								"Route2A-0217_Elmira Rd. at West End Community Centre - NB" //
@@ -392,6 +394,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 								"Route2B-0267_Woodlawn Rd. W. at Regal Rd. - WB", // Woodlawn Rd. W. at Regal Rd. - WB
 								"Route2B-0268_Woodlawn Rd. W. at Royal Rd. - WB", // Woodlawn Rd. W. at Royal Rd. - WB
 								"Route2B-0272_Royal Rd. at ARC Industries", // Royal Rd. at ARC Industries
+								"Route2B-0273_Imperial Rd. N. at Speedvale Ave. W. - NB", //
 								"Route2B-0278_Elmira Rd. at West End Community Centre - SB", // Elmira Rd. at West End Community Centre - SB
 						})) //
 				.compileBothTripSort());
@@ -403,8 +406,9 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						"Route3A-0300_GCS East Plat5", //
 								"Route3A-0306_Yorkshire St. N. at London Rd. W.", //
 								"Route3A-0313_Nicklin Rd. at Woodlawn Rd. W.", //
+								"Route3A-0314_Woodlawn at Wal-Mart - EB", //
 								"Route3A-0327_Eastview Rd. at Glenburnie Dr.", //
-								"Route3A-0333_Watson Pkwy N. at Library" //
+								"Route3A-0333_Watson Pkwy N. at Library", //
 						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
@@ -412,7 +416,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 								"Route3A-0341_UC South Plat0", //
 								"Route3A-0349_GCS East Plat5", //
 								"Route3A-0342_Gordon St. at Vet College", //
-								"Route3A-0349_GCS East Plat5" //
+								"Route3A-0349_Wellington St. at Wellington Plaza", //
 						})) //
 				.compileBothTripSort());
 		map2.put(3l + RID_STARTS_WITH_B, new RouteTripSpec(3l + RID_STARTS_WITH_B, // 3B
@@ -571,6 +575,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						"Route8-0813_Stone Road Mall", //
 								"Route8-0817_College Ave. W. at Meadowcroft", //
 								"Route8-0820_Edinburgh Rd. S. at Municipal St.", //
+								"Route8-0826_Guelph City Hall", //
 								"Route8-0827_GCS East Plat19", //
 								"Route8-0800_GCS Mid Plat7", //
 						})) //
@@ -578,6 +583,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route8-0800_GCS Mid Plat7", //
 								"Route8-0806_Maple St. at Forest St.", //
+								"Route8-0809_College Ave. W. at Edinburgh Rd. S.", //
 								"Route8-0812_Janefield Ave. at Scottsdale Dr.", //
 								"Route8-0813_Stone Road Mall" //
 						})) //
@@ -594,6 +600,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route9-0900_GCS West Plat8", //
+								"Route9-0909_Imperial Rd. S. at Stephanie Dr.", //
 								"Route9-0912_Paisley Rd. at Zehrs", //
 								"Route9-0915_Imperial Rd. at West Acres Dr." //
 						})) //
@@ -611,6 +618,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route10-1000_GCS East Plat3", //
 								"Route10-1009_Paisley Rd. at Heath Rd.", //
+								"Route10-1013_Willow Rd. at Westwood Rd.", //
 								"Route10-1019_Paisley Rd. at West Hill Estates" //
 						})) //
 				.compileBothTripSort());
@@ -624,12 +632,13 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 								"Route11-1124_Paisley St. at Norfolk St.", //
 								"Route11-1130_St George's Square IF Shoe store", // ==
 								"Route11-1125_GCS East Plat2", //
-								"Route11-1126_Guelph Central Station Platform 22" //
+								"Route11-1126_GCS West Plat22", //
 						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route11-1100_GCS West Plat15", //
 								"Route11-1109_Dawson Rd. at Shelldale Cres.", //
+								"Route11-1113_361 Speedvale Ave. W.", //
 								"Route11-1118_158 Willow Rd." //
 						})) //
 				.compileBothTripSort());
@@ -639,6 +648,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 				.addTripSort(MDirectionType.NORTH.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route12-1200_GCS East Plat19", //
+								"Route12-1206_Delhi St. at Emma St. - NB", //
 								"Route12-1207_Emma St. at Metcalfe St.", //
 								"Route12-1215_Windsor St. at Kingsley Crt." //
 						})) //
@@ -656,6 +666,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"Route13-1300_GCS East Plat18", //
 								"Route13-1311_Cassino Ave. at William St.", //
+								"Route13-1312_Cassino Ave. at Palermo Cres.", //
 								"Route13-1318_Starwood Dr. at Watt St." //
 						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
@@ -663,6 +674,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						"Route13-1318_Starwood Dr. at Watt St.", //
 								"Route13-1323_211 Victoria Rd. N.", //
 								"Route13-1327_Eramosa Rd. at Metcalfe St.", //
+								"Route13-1329_St George's Square IF Shoe store", //
 								"Route13-1330_GCS West Plat8", //
 								"Route13-1300_GCS East Plat18" //
 						})) //
@@ -716,11 +728,12 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 								"Route16-1650_Gordon St. at Dormie Lane", //
 								"Route16-1653_Wyndham St. at Fountain St.", // ==
 								"Route16-1654_GCS West Plat15", //
-								"Route16-1600_Guelph Central Station Platform 2", //
+								"Route16-1600_ Guelph Central Station Platform 2", //
 						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route16-1600_GCS East Plat2", //
+								"Route16-1600_ Guelph Central Station Platform 2", //
 								"Route16-1602_Gordon St. at Water St.", //
 								"Route16-1605_Gordon St. at College Ave. - SB", //
 								"Route16-1611_Gordon St. at Edinburgh Rd. S. - SB", //
@@ -743,6 +756,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
 						"Route20-2000_GCS East Plat20", //
+								"Route20-2001_Woolwich St. at Norwich St. E.", //
 								"Route20-2005_Willow West Mall", //
 								"Route20-2010_Willow Rd. at Flaherty Dr. - WB", //
 								"Route20-2016_Governors Rd. at Woodlawn Rd. W." //
