@@ -91,102 +91,42 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 
 	private static final Pattern DIGITS = Pattern.compile("[\\d]+");
 
-	private static final String ROUTE_GORDON_CORRIDOR = "Route Gordon Corridor";
-	private static final String GORDON_CORRIDOR = "Gordon Corridor";
-	private static final String GORDON_CORRIDOR_RSN = "GC";
-	private static final long GORDON_CORRIDOR_RID = 9999l;
+	private static final String COMMUNITY_BUS_RSN = "Com";
+	private static final long COMMUNITY_BUS_RID = 9998L;
 
-	private static final String A = "A";
-	private static final String B = "B";
+	private static final String U = "U";
 
-	private static final long RID_STARTS_WITH_A = 1000l;
-	private static final long RID_STARTS_WITH_B = 2000l;
+	private static final long RID_ENDS_WITH_U = 21000L;
 
 	@Override
 	public long getRouteId(GRoute gRoute) {
-		if (ROUTE_GORDON_CORRIDOR.equals(gRoute.getRouteId())) {
-			return GORDON_CORRIDOR_RID;
+		if (COMMUNITY_BUS_RSN.equals(gRoute.getRouteShortName())) {
+			return COMMUNITY_BUS_RID;
 		}
 		String routeShortName = gRoute.getRouteShortName();
 		if (routeShortName != null && routeShortName.length() > 0 && Utils.isDigitsOnly(routeShortName)) {
 			return Long.parseLong(routeShortName); // using route short name as route ID
 		}
 		Matcher matcher = DIGITS.matcher(routeShortName);
-		if (!matcher.find()) {
-			System.out.printf("\nCan't find route ID digits for %s (%s)!\n", routeShortName, gRoute);
-			System.exit(-1);
-			return -1l;
+		if (matcher.find()) {
+			int digits = Integer.parseInt(matcher.group());
+			if (routeShortName.endsWith(U)) {
+				return RID_ENDS_WITH_U + digits;
+			}
 		}
-		int digits = Integer.parseInt(matcher.group());
-		if (routeShortName.endsWith(A)) {
-			return RID_STARTS_WITH_A + digits;
-		} else if (routeShortName.endsWith(B)) {
-			return RID_STARTS_WITH_B + digits;
-		} else {
-			System.out.printf("\nCan't find route ID for %s (%s)!\n", routeShortName, gRoute);
-			System.exit(-1);
-			return -1l;
-		}
+		System.out.printf("\nCan't find route ID for '%s' (%s)!\n", routeShortName, gRoute);
+		System.exit(-1);
+		return -1l;
 	}
+
+	private static final Pattern ALL_WHITESPACES = Pattern.compile("\\s+", Pattern.CASE_INSENSITIVE);
 
 	@Override
 	public String getRouteShortName(GRoute gRoute) {
-		if (ROUTE_GORDON_CORRIDOR.equals(gRoute.getRouteId())) {
-			return GORDON_CORRIDOR_RSN;
-		}
-		return super.getRouteShortName(gRoute);
+		String routeShortName = gRoute.getRouteShortName();
+		routeShortName = ALL_WHITESPACES.matcher(routeShortName).replaceAll(StringUtils.EMPTY);
+		return routeShortName;
 	}
-
-	private static final String COLLEGE_EDINBURGH_CLOCKWISE = "College Edinburgh (Clockwise)";
-	private static final String COLLEGE_EDINBURGH_COUNTER_CLOCKWISE = "College Edinburgh (Counter Clockwise)";
-	private static final String WEST_LOOP_CLOCKWISE = "West Loop (Clockwise)";
-	private static final String WEST_LOOP_COUNTER_CLOCKWISE = "West Loop (Counter Clockwise)";
-	private static final String EAST_LOOP_CLOCKWISE = "East Loop (Clockwise)";
-	private static final String EAST_LOOP_COUNTER_CLOCKWISE = "East Loop (Counter Clockwise)";
-	private static final String YORK = "York";
-	private static final String GORDON = "Gordon";
-	private static final String HARVARD_IRONWOOD = "Harvard Ironwood";
-	private static final String KORTRIGHT_DOWNEY = "Kortright Downey";
-	private static final String STONE_ROAD_MALL = "Stone Road Mall";
-	private static final String WATERLOO = "Waterloo";
-	private static final String WILLOW_WEST = "Willow West";
-	private static final String IMPERIAL = "Imperial";
-	private static final String VICTORIA_ROAD_RECREATION_CENTRE = "Victoria Road Recreation Centre";
-	private static final String GRANGE = "Grange";
-	private static final String UNIVERSITY_COLLEGE = "University College";
-	private static final String NORTHWEST_INDUSTRIAL = "Northwest Industrial";
-	private static final String EDINBURGH_EXPRESS = "Edinburgh Express";
-	private static final String HARVARD_EXPRESS = "Harvard Express";
-	private static final String VICTORIA_EXPRESS = "Victoria Express";
-	private static final String STONE_ROAD_EXPRESS = "Stone Road Express";
-	private static final String SOUTHGATE = "Southgate";
-	private static final String GENERAL_HOSPITAL = "General Hospital";
-
-	private static final String RSN_58 = "58";
-	private static final String RSN_57 = "57";
-	private static final String RSN_56 = "56";
-	private static final String RSN_50 = "50";
-	private static final String RSN_20 = "20";
-	private static final String RSN_16 = "16";
-	private static final String RSN_15 = "15";
-	private static final String RSN_14 = "14";
-	private static final String RSN_13 = "13";
-	private static final String RSN_12 = "12";
-	private static final String RSN_11 = "11";
-	private static final String RSN_10 = "10";
-	private static final String RSN_9 = "9";
-	private static final String RSN_8 = "8";
-	private static final String RSN_7 = "7";
-	private static final String RSN_6 = "6";
-	private static final String RSN_5A = "5A";
-	private static final String RSN_5 = "5";
-	private static final String RSN_4 = "4";
-	private static final String RSN_3B = "3B";
-	private static final String RSN_3A = "3A";
-	private static final String RSN_2B = "2B";
-	private static final String RSN_2A = "2A";
-	private static final String RSN_1B = "1B";
-	private static final String RSN_1A = "1A";
 
 	private static final Pattern STARTS_WITH_ROUTE_RSN = Pattern.compile("(route[\\d]*[A-Z]*[\\-]?[\\s]*)", Pattern.CASE_INSENSITIVE);
 
@@ -195,42 +135,11 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 		String routeLongName = gRoute.getRouteLongName();
 		routeLongName = STARTS_WITH_ROUTE_RSN.matcher(routeLongName).replaceAll(StringUtils.EMPTY);
 		if (StringUtils.isEmpty(routeLongName)) {
-			if (ROUTE_GORDON_CORRIDOR.equals(gRoute.getRouteId())) {
-				return GORDON_CORRIDOR;
-			}
-			// @formatter:off
-			if (RSN_1A.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLLEGE_EDINBURGH_CLOCKWISE;	}
-			if (RSN_1B.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLLEGE_EDINBURGH_COUNTER_CLOCKWISE;	}
-			if (RSN_2A.equalsIgnoreCase(gRoute.getRouteShortName())) { return WEST_LOOP_CLOCKWISE;	}
-			if (RSN_2B.equalsIgnoreCase(gRoute.getRouteShortName())) { return WEST_LOOP_COUNTER_CLOCKWISE;	}
-			if (RSN_3A.equalsIgnoreCase(gRoute.getRouteShortName())) { return EAST_LOOP_CLOCKWISE;	}
-			if (RSN_3B.equalsIgnoreCase(gRoute.getRouteShortName())) { return EAST_LOOP_COUNTER_CLOCKWISE;	}
-			if (RSN_4.equalsIgnoreCase(gRoute.getRouteShortName())) { return YORK; }
-			if (RSN_5.equalsIgnoreCase(gRoute.getRouteShortName())) { return GORDON; }
-			if (RSN_5A.equalsIgnoreCase(gRoute.getRouteShortName())) { return GORDON; }
-			if (RSN_6.equalsIgnoreCase(gRoute.getRouteShortName())) { return HARVARD_IRONWOOD; }
-			if (RSN_7.equalsIgnoreCase(gRoute.getRouteShortName())) { return KORTRIGHT_DOWNEY; }
-			if (RSN_8.equalsIgnoreCase(gRoute.getRouteShortName())) { return STONE_ROAD_MALL; }
-			if (RSN_9.equalsIgnoreCase(gRoute.getRouteShortName())) { return WATERLOO; }
-			if (RSN_10.equalsIgnoreCase(gRoute.getRouteShortName())) { return IMPERIAL; }
-			if (RSN_11.equalsIgnoreCase(gRoute.getRouteShortName())) { return WILLOW_WEST; }
-			if (RSN_12.equalsIgnoreCase(gRoute.getRouteShortName())) { return GENERAL_HOSPITAL; }
-			if (RSN_13.equalsIgnoreCase(gRoute.getRouteShortName())) { return VICTORIA_ROAD_RECREATION_CENTRE; }
-			if (RSN_14.equalsIgnoreCase(gRoute.getRouteShortName())) { return GRANGE; }
-			if (RSN_15.equalsIgnoreCase(gRoute.getRouteShortName())) { return UNIVERSITY_COLLEGE; }
-			if (RSN_16.equalsIgnoreCase(gRoute.getRouteShortName())) { return SOUTHGATE; }
-			if (RSN_20.equalsIgnoreCase(gRoute.getRouteShortName())) { return NORTHWEST_INDUSTRIAL; }
-			if (RSN_50.equalsIgnoreCase(gRoute.getRouteShortName())) { return STONE_ROAD_EXPRESS; }
-			if (RSN_56.equalsIgnoreCase(gRoute.getRouteShortName())) { return VICTORIA_EXPRESS; }
-			if (RSN_57.equalsIgnoreCase(gRoute.getRouteShortName())) { return HARVARD_EXPRESS; }
-			if (RSN_58.equalsIgnoreCase(gRoute.getRouteShortName())) { return EDINBURGH_EXPRESS; }
-			// @formatter:on
 			System.out.printf("\ngetRouteLongName() > Unexpected route short name '%s' (%s)!\n", gRoute.getRouteShortName(), gRoute);
 			System.exit(-1);
 			return null;
-		} else {
-			return CleanUtils.cleanLabel(routeLongName);
 		}
+		return CleanUtils.cleanLabel(routeLongName);
 	}
 
 	private static final String AGENCY_COLOR = "00A6E5"; // BLUE
@@ -240,59 +149,48 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 		return AGENCY_COLOR;
 	}
 
-	private static final String COLOR_F57215 = "F57215";
-	private static final String COLOR_3D3A9B = "3D3A9B";
-	private static final String COLOR_0A904B = "0A904B";
-	private static final String COLOR_A52D84 = "A52D84";
-	private static final String COLOR_90191E = "90191E";
-	private static final String COLOR_6BA630 = "6BA630";
-	private static final String COLOR_5F2490 = "5F2490";
-	private static final String COLOR_F9A720 = "F9A720";
-	private static final String COLOR_EC008C = "EC008C";
-	private static final String COLOR_5A74B4 = "5A74B4";
-	private static final String COLOR_007C8E = "007C8E";
-	private static final String COLOR_475683 = "475683";
-	private static final String COLOR_F2E827 = "F2E827";
-	private static final String COLOR_9E7C3E = "9E7C3E";
-	private static final String COLOR_4B6639 = "4B6639";
-	private static final String COLOR_00ADEF = "00ADEF";
-	private static final String COLOR_8D319D = "8D319D";
-	private static final String COLOR_ED1C24 = "ED1C24";
-	private static final String COLOR_66C530 = "66C530";
-
 	@Override
 	public String getRouteColor(GRoute gRoute) {
-		if (ROUTE_GORDON_CORRIDOR.equals(gRoute.getRouteId())) {
-			return null;
+		if (COMMUNITY_BUS_RSN.equals(gRoute.getRouteShortName())) {
+			return "CC5577"; // mix between A54686 (VIOLET) & F36768 (PINK/RED)
 		}
-		// @formatter:off
-		if (RSN_1A.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_F57215; }
-		if (RSN_1B.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_F57215; }
-		if (RSN_2A.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_3D3A9B; }
-		if (RSN_2B.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_3D3A9B; }
-		if (RSN_3A.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_0A904B; }
-		if (RSN_3B.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_0A904B; }
-		if (RSN_4.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_A52D84;	}
-		if (RSN_5.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_90191E; }
-		if (RSN_5A.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_90191E; }
-		if (RSN_6.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_6BA630; }
-		if (RSN_7.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_5F2490; }
-		if (RSN_8.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_00ADEF; }
-		if (RSN_9.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_F9A720; }
-		if (RSN_10.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_EC008C; }
-		if (RSN_11.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_5A74B4; }
-		if (RSN_12.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_007C8E; }
-		if (RSN_13.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_ED1C24; }
-		if (RSN_14.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_475683; }
-		if (RSN_15.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_F2E827; }
-		if (RSN_16.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_9E7C3E; }
-		if (RSN_20.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_4B6639; }
-		if (RSN_50.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_00ADEF; }
-		if (RSN_56.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_8D319D; }
-		if (RSN_57.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_ED1C24; }
-		if (RSN_58.equalsIgnoreCase(gRoute.getRouteShortName())) { return COLOR_66C530; }
-		// @formatter:on
-		System.out.printf("\ngetRouteColor() > Unexpected route short name '%s' (%s)!\n", gRoute.getRouteShortName(), gRoute);
+		Matcher matcher = DIGITS.matcher(gRoute.getRouteShortName());
+		if (matcher.find()) {
+			int rsn = Integer.parseInt(matcher.group());
+			switch (rsn) {
+			// @formatter:off
+			case 1: return "403F99";
+			case 2: return "403F99";
+			case 3: return "91459A";
+			case 4: return "1389B8";
+			case 5: return "921A1D";
+			case 6: return "ED1C24";
+			case 7: return "682C91";
+			case 8: return "0081AF";
+			case 9: return "A54686";
+			case 10: return "EC008C";
+			case 11: return "5b7AAE";
+			case 12: return "00828F";
+			case 13: return "821167";
+			case 14: return "485E88";
+			case 15: return "8E7140";
+			case 16: return "28702A";
+			case 17: return "CA6528";
+			case 18: return "CA6528";
+			case 20: return "556940";
+			case 40: return "00588A";
+			case 41: return "345A1A";
+			case 50: return "EC008C"; // 50 U
+			case 51: return "556940"; // 51 U
+			case 52: return "00828F"; // 52 U
+			case 56: return "ED1C24"; // 56 U
+			case 57: return "5B7AAE"; // 57 U
+			case 58: return "91459A"; // 58 U
+			case 99: return "4f833C";
+			// @formatter:on
+			}
+		}
+		System.out.printf("\ngetRouteColor() > Unexpected route color for '%s'!\n", gRoute);
 		System.exit(-1);
 		return null;
 	}
@@ -300,383 +198,221 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 	private static HashMap<Long, RouteTripSpec> ALL_ROUTE_TRIPS2;
 	static {
 		HashMap<Long, RouteTripSpec> map2 = new HashMap<Long, RouteTripSpec>();
-		map2.put(GORDON_CORRIDOR_RID, new RouteTripSpec(GORDON_CORRIDOR_RID, //
+		map2.put(1L, new RouteTripSpec(1L, //
+				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
+				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
+				.addTripSort(MDirectionType.EAST.intValue(), //
+						Arrays.asList(new String[] { //
+						"112", // Edinburgh at Laurelwood northbound
+								"356", // ==
+								"5844", // University Centre South Loop Platform 2
+								"5845", // University Centre South Loop Platform 4
+						})) //
+				.addTripSort(MDirectionType.WEST.intValue(), //
+						Arrays.asList(new String[] { //
+						"5845", // University Centre South Loop Platform 4
+								"106", // ++
+								"112", // Edinburgh at Laurelwood northbound
+						})) //
+				.compileBothTripSort());
+		map2.put(2L, new RouteTripSpec(2L, //
+				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
+				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
+				.addTripSort(MDirectionType.EAST.intValue(), //
+						Arrays.asList(new String[] { //
+						"162", // Edinburgh at Ironwood southbound
+								"168", // ++
+								"5834", // University Centre North Loop Platform 10
+						})) //
+				.addTripSort(MDirectionType.WEST.intValue(), //
+						Arrays.asList(new String[] { //
+						"5847", // University Centre North Loop Platform 11
+								"157", // ++
+								"162", // Edinburgh at Ironwood southbound
+						})) //
+				.compileBothTripSort());
+		map2.put(3L, new RouteTripSpec(3L, //
 				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), //
 				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.SOUTH.getId()) //
 				.addTripSort(MDirectionType.NORTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route Gordon Corridor-11_Gosling Gardens at Clair Rd. W.", //
-								"Route Gordon Corridor-18_Gordon St. at Valley Rd.", //
-								"Route Gordon Corridor-24_Gordon St. at Monticello Cres.", //
-								"Route Gordon Corridor-25_Gordon St. at South Ring Rd. E.", //
-								"Route Gordon Corridor-25_University Centre" //
+						"5841", // Guelph Central Station Platform 21
+								"305", // ++
+								"231", // Woodlawn at Edinburgh eastbound
 						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route Gordon Corridor-0_University Dep", //
-								"Route Gordon Corridor-5_1155 Gordon St.", //
-								"Route Gordon Corridor-11_Gosling Gardens at Clair Rd. W." //
+						"231", // Woodlawn at Edinburgh eastbound
+								"392", // ++
+								"1130", // ==
+								"5837", // Guelph Central Station Platform 5
+								"5841", // Guelph Central Station Platform 21
 						})) //
 				.compileBothTripSort());
-		map2.put(1l + RID_STARTS_WITH_A, new RouteTripSpec(1l + RID_STARTS_WITH_A, // 1A
+		map2.put(4L, new RouteTripSpec(4L, //
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
 				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
 				.addTripSort(MDirectionType.EAST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route1A-115_181 Janefield Ave.", //
-								"Route1A-119_50 College Ave. W.", //
-								"Route1A-123_UC North Loop Plat8" //
+						"5849", // Guelph Central Station Platform 2
+								"408", // ++
+								"416", // Watson at Guelph Transit southbound
 						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route1A-100_UC North Loop Plat7", //
-								"Route1A-111_Edinburgh Rd. S. at Koch Dr.", //
-								"Route1A-112_Edinburgh Rd. S. at Laurelwood Crt.", //
-								"Route1A-115_181 Janefield Ave." //
+						"416", // Watson at Guelph Transit southbound
+								"423", // ++
+								"5850", // Guelph Central Station Platform 2
 						})) //
 				.compileBothTripSort());
-		map2.put(1l + RID_STARTS_WITH_B, new RouteTripSpec(1l + RID_STARTS_WITH_B, // 1B
-				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
-				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
-				.addTripSort(MDirectionType.EAST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route1B-0162_583 Edinburgh Rd. S.", //
-								"Route1B-0168_Gordon St. at Valley Rd.", //
-								"Route1B-0174_Gordon St. at Monticello Cres.", //
-								"Route1B-0175_UC North Loop Plat9" //
-						})) //
-				.addTripSort(MDirectionType.WEST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route1B-0150_UC South Loop Plat6",//
-								"Route1B-0157_129 Janefield Ave.", //
-								"Route1B-0162_583 Edinburgh Rd. S." //
-						})) //
-				.compileBothTripSort());
-		map2.put(2l + RID_STARTS_WITH_A, new RouteTripSpec(2l + RID_STARTS_WITH_A, // 2A
-				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
-				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
-				.addTripSort(MDirectionType.EAST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route2A-0217_Elmira Rd. at West End Community Centre - NB", //
-								"Route2A-0222_Imperial Rd. N. at Speedvale Ave. W. - SB", //
-								"Route2A-0223_Royal Rd. Opp ARC Industries", //
-								"Route2A-0232_Woodlawn Rd. W. at Nicklin Rd. -EB", //
-								"Route2A-0237_Woolwich St. at Tiffany St.", //
-								"Route2A-0241_GCS East Plat1" //
-						})) //
-				.addTripSort(MDirectionType.WEST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route2A-0200_GCS East Plat1", //
-								"Route2A-0203_Gordon St. at James St.", //
-								"Route2A-0206_UC South Loop Plat01", //
-								"Route2A-0207_Stone Rd. W. at Edinburgh Rd. S. - WB", //
-								"Route2A-0209_659 Wellington St. W.", //
-								"Route2A-0210_Fife Rd. at Wellington St. W.", //
-								"Route2A-0216_Elmira Rd. at Zehrs", //
-								"Route2A-0217_Elmira Rd. at West End Community Centre - NB" //
-						})) //
-				.compileBothTripSort());
-		map2.put(2l + RID_STARTS_WITH_B, new RouteTripSpec(2l + RID_STARTS_WITH_B, // 2B
-				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
-				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
-				.addTripSort(MDirectionType.EAST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route2B-0278_Elmira Rd. at West End Community Centre - SB", // Elmira Rd. at West End Community Centre - SB
-								"Route2B-0282_Fife Rd. at Elmira Rd.", // Route2B-0282_Fife Rd. at Elmira Rd.
-								"Route2B-0291_UC North Plat10", // UC North Plat10
-								"Route2B-0294_Gordon St. at Dormie Lane", // Gordon St. at Dormie Lane
-								"Route2B-0298_GCS West Plat14" // GCS West Plat14
-						})) //
-				.addTripSort(MDirectionType.WEST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route2B-0250_GCS West Plat14", // GCS West Plat14
-								"Route2B-0259_Woolwich St. at Evergreen", //
-								"Route2B-0267_Woodlawn Rd. W. at Regal Rd. - WB", // Woodlawn Rd. W. at Regal Rd. - WB
-								"Route2B-0268_Woodlawn Rd. W. at Royal Rd. - WB", // Woodlawn Rd. W. at Royal Rd. - WB
-								"Route2B-0272_Royal Rd. at ARC Industries", // Royal Rd. at ARC Industries
-								"Route2B-0273_Imperial Rd. N. at Speedvale Ave. W. - NB", //
-								"Route2B-0278_Elmira Rd. at West End Community Centre - SB", // Elmira Rd. at West End Community Centre - SB
-						})) //
-				.compileBothTripSort());
-		map2.put(3l + RID_STARTS_WITH_A, new RouteTripSpec(3l + RID_STARTS_WITH_A, // 3A
-				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
-				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
-				.addTripSort(MDirectionType.EAST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route3A-0300_GCS East Plat5", //
-								"Route3A-0306_Yorkshire St. N. at London Rd. W.", //
-								"Route3A-0313_Nicklin Rd. at Woodlawn Rd. W.", //
-								"Route3A-0314_Woodlawn at Wal-Mart - EB", //
-								"Route3A-0327_Eastview Rd. at Glenburnie Dr.", //
-								"Route3A-0333_Watson Pkwy N. at Library", //
-						})) //
-				.addTripSort(MDirectionType.WEST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route3A-0333_Watson Pkwy N. at Library", //
-								"Route3A-0341_UC South Plat0", //
-								"Route3A-0349_GCS East Plat5", //
-								"Route3A-0342_Gordon St. at Vet College", //
-								"Route3A-0349_Wellington St. at Wellington Plaza", //
-						})) //
-				.compileBothTripSort());
-		map2.put(3l + RID_STARTS_WITH_B, new RouteTripSpec(3l + RID_STARTS_WITH_B, // 3B
-				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
-				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
-				.addTripSort(MDirectionType.EAST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route3B-0350_GCS Mid Plat6", // GCS Mid Plat6
-								"Route3B-0353_Gordon St. at Water St.", //
-								"Route3B-0357_UC South Plat5", // UC South Plat5
-								"Route3B-0358_Stone Rd. E. at Arbour Medical Centre - EB", // Stone Rd. E. at Arbour Medical Centre - EB
-								"Route3B-0365_Watson Pkwy. N. opposite Library", //
-								"Route3B-0366_Watson Pkwy. N. at Fleming Rd. - NB", // Watson Pkwy. N. at Fleming Rd. - NB
-						})) //
-				.addTripSort(MDirectionType.WEST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route3B-0366_Watson Pkwy. N. at Fleming Rd. - NB", // Watson Pkwy. N. at Fleming Rd. - NB
-								"Route3B-0371_Eastview Rd. at Mountford Dr. - WB", // Eastview Rd. at Mountford Dr.
-								"Route3B-0372_Eastview Rd. at Victoria Rd.", // Eastview Rd. at Victoria Rd.
-								"Route3B-0373_211 Victoria Rd. N.", //
-								"Route3B-0378_Victoria Rd. N. opposite Trillium Waldorf", //
-								"Route3B-0389_Westmount Rd. at Kimberley Dr.", // Westmount Rd. at Kimberley Dr.
-								"Route3B-0393_Westmount Rd. at London Rd. W.", //
-								"Route3B-0397_160 Woolwich St.", //
-								"Route3B-0398_St George's Square IF Shoe store", // St George's Square IF Shoe store
-								"Route3B-0399_GCS Mid Plat6", // GCS Mid Plat6
-						})) //
-				.compileBothTripSort());
-		map2.put(4l, new RouteTripSpec(4l, //
-				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
-				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
-				.addTripSort(MDirectionType.EAST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route4-0400_GCS East Plat21", //
-								"Route4-0408_535 York Rd. at Tim Hortons", //
-								"Route4-0416_Watson Rd. S. at Guelph Transit Centre" //
-						})) //
-				.addTripSort(MDirectionType.WEST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route4-0416_Watson Rd. S. at Guelph Transit Centre", //
-								"Route4-0423_York Rd. at Beaumont Cres. - EB", //
-								"Route4-0430_GCS East Plat3" //
-						})) //
-				.compileBothTripSort());
-		map2.put(5l, new RouteTripSpec(5l, //
+		map2.put(5L, new RouteTripSpec(5L, //
 				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), //
 				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.SOUTH.getId()) //
 				.addTripSort(MDirectionType.NORTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route5-0520_Frederick Dr. at Waterford Dr.", //
-								"Route5-0528_Gordon St. at Lowes Rd. - NB", //
-								"Route5-0538_UC South Loop Plat3", //
-								"Route5-0539_Gordon St. at Vet College", //
-								"Route5-0545_Guelph City Hall", //
-								"Route5-0546_GCS East Plat22", //
-								"Route5-0500_GCS East Plat4", //
+						"520", // Frederick at Waterford westbound
+								"528", // Gordon at Lowes northbound
+								"174", // ==
+								"5844", // University Centre South Loop Platform 2
+								"5845", // University Centre South Loop Platform 4
 						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route5-0500_GCS East Plat4", //
-								"Route5-0503_Gordon St. at Water St. - SB", //
-								"Route5-0507_UC South Loop Plat4", // ==
-								"Route5-0508_Gordon St. at Stone Rd. W.", //
-								"Route5-0509_Gordon St. at Harvard Rd.", //
-								"Route5-0515_Arkell Rd. at Ridgeway Ave.", // !=
-								"Route5-0516_Summerfield Dr. at Amsterdam Cres.", // ==
-								"Route5-0517_Summerfield Dr. at Cummings Crt.", //
-								"Route5-0518_Summerfield Dr. at Bright Lane", //
-								"Route5-0519_Summerfield Dr. at Victoria Rd. S.", //
-								"Route5-0547_Victoria Rd. S at Katemore Dr.", //
-								"Route5-0520_Frederick Dr. at Waterford Dr." //
+						"5844", // University Centre South Loop Platform 2
+								"5915", // ++
+								"520", // Frederick at Waterford westbound
 						})) //
 				.compileBothTripSort());
-		map2.put(5l + RID_STARTS_WITH_A, new RouteTripSpec(5l + RID_STARTS_WITH_A, // 5A
+		map2.put(6L, new RouteTripSpec(6L, //
+				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
+				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
+				.addTripSort(MDirectionType.EAST.intValue(), //
+						Arrays.asList(new String[] { //
+						"615", // Ironwood at Kortright northbound
+								"621", // ++
+								"5843", // University Centre South Loop Platform 1
+						})) //
+				.addTripSort(MDirectionType.WEST.intValue(), //
+						Arrays.asList(new String[] { //
+						"5831", // University Centre South Loop Platform 3
+								"608", // ++
+								"615", // Ironwood at Kortright northbound
+						})) //
+				.compileBothTripSort());
+		map2.put(7L, new RouteTripSpec(7L, //
+				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
+				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
+				.addTripSort(MDirectionType.EAST.intValue(), //
+						Arrays.asList(new String[] { //
+						"5843", // University Centre South Loop Platform 1
+								"706", // ++
+								"713", // Ptarmigan at Downey eastbound
+						})) //
+				.addTripSort(MDirectionType.WEST.intValue(), //
+						Arrays.asList(new String[] { //
+						"713", // Ptarmigan at Downey eastbound
+								"717", // Kortright at Ironwood eastbound
+								"5831", // University Centre South Loop Platform 3
+						})) //
+				.compileBothTripSort());
+		map2.put(8L, new RouteTripSpec(8L, //
 				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), //
 				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.SOUTH.getId()) //
 				.addTripSort(MDirectionType.NORTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route5A-0520_Frederick Dr. at Waterford Dr.", // Frederick Dr. at Waterford Dr.
-								"Route5A-0521_Goodwin Dr. at Ray Cres.", // ++
-								"Route5A-0527_Pine Ridge Dr. at Periwinkle Way", // ++
-								"Route5A-0528_Gordon St. at Lowes Rd. - NB", // Gordon St. at Lowes Rd.
-								"Route5A-0529_Gordon St. at Heritage Dr.", // ++
-								"Route5A-0537_Gordon St. at Monticello Cres.", // ++
-								"Route5A-0538_UC South Loop Plat3", // UC South Loop Plat3
-								"Route5A-0539_Gordon St. at Vet College", // Gordon St. at Vet College
-								"Route5A-0540_Gordon St. at Macdonald Stewart Art Centre", // ++
-								"Route5A-0542_Gordon St. at Water St. - NB", // ++
-								"Route5A-0549_Gordon Street at Royal City Park-NB", // ++ ???
-								"Route5A-0543_Gordon St. at Wellington St. - NB", // ++
-								"Route5A-0544_Gordon St. at Harvey's", // ++
-								"Route5A-0545_Guelph City Hall", // ++
-								"Route5A-0546_GCS East Plat22" // GCS East Plat22
+						"6047", // Stone Road Mall Platform 2
+								"819", // ++
+								"5849", // Guelph Central Station Platform 2
 						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route5A-0500_GCS East Plat4", // GCS East Plat4
-								"Route5A-0501_Gordon St. at Nottingham St.", // ++
-								"Route5A-0506_Gordon St. at College Ave. W.", // ++
-								"Route5A-0507_UC South Loop Plat4", // == UC South Loop Plat4
-								"Route5A-0508_Gordon St. at Stone Rd. W.", // != ???
-								"Route5A-0509_Gordon St. at Harvard Rd.", // == Gordon St. at Harvard Rd.
-								"Route5A-0510_Gordon St. at Kortright Rd. - SB", // != ++
-								"Route5A-0514_Arkell Rd. at Gordon St.", // ++
-								"Route5A-0515_Arkell Rd. at Ridgeway Ave.", // !=
-								"Route5A-0549_Victoria Road South at Macalister Boulevard southbound", // !=
-								"Route5A-0548_ 1035 Victoria Road southbound", // ++
-								"Route5A-5617_Victoria at Arkell", // !=
-
-								"Route5A-0516_Summerfield Dr. at Amsterdam Cres.", // ===
-								"Route5A-0517_Summerfield Dr. at Cummings Crt.", // ++
-								"Route5A-0547_Victoria Rd. S at Katemore Dr.", // ++
-								"Route5A-0520_Frederick Dr. at Waterford Dr." // Frederick Dr. at Waterford Dr.
+						"5850", // Guelph Central Station Platform 3
+								"808", // ++
+								"6047", // Stone Road Mall Platform 2
 						})) //
 				.compileBothTripSort());
-		map2.put(6l, new RouteTripSpec(6l, //
+		map2.put(9L, new RouteTripSpec(9L, //
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
 				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
 				.addTripSort(MDirectionType.EAST.intValue(), //
 						Arrays.asList(new String[] { //
-								"Route6-0628_632 Scottsdale Dr.", //
-								"Route6-0622_Youngman Dr. at Harvard Rd.",//
-								"Route6-0627_UC North Loop Plat7" //
+						"213", // Elmira at West Acres northbound
+								"919", // ++
+								"923", // ==
+								"5833", // Guelph Central Station Platform 1
+								"5852", // Guelph Central Station Platform 7
 						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route6-0600_UC North Loop Plat8",//
-								"Route6-0606_Edinburgh Rd. at Laurelwood Crt.", //
-								"Route6-0613_Ironwood Rd. at Hilldale Cres.", //
-								"Route6-0618_692 Scottsdale Dr.", //
-								"Route6-0628_632 Scottsdale Dr." //
+						"5853", // Guelph Central Station Platform 8
+								"904", // ++
+								"213", // Elmira at West Acres northbound
 						})) //
 				.compileBothTripSort());
-		map2.put(7l, new RouteTripSpec(7l, //
+		map2.put(10L, new RouteTripSpec(10L, //
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
 				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
 				.addTripSort(MDirectionType.EAST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route7-0713_Ptarmigan Dr. at Downey Rd.", //
-								"Route7-0717_Kortright Rd. W. at Plaza", //
-								"Route7-0719_Kortright Rd. W. at Edinburgh Rd. S. - EB", //
-								"Route7-0725_UC South Loop Plat6", //
+						"1015", // Imperial at Ferman southbound
+								"1022", // ++
+								"5860", // Guelph Central Station Platform 22
 						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route7-0700_UC North Loop Plat9", //
-								"Route7-0709_Downey Rd. at Woodland Glen Dr.", //
-								"Route7-0713_Ptarmigan Dr. at Downey Rd.", //
+						"5858", // Guelph Central Station Platform 19
+								"1008", // ++
+								"1015", // Imperial at Ferman southbound
 						})) //
 				.compileBothTripSort());
-		map2.put(8l, new RouteTripSpec(8l, //
+		map2.put(11L, new RouteTripSpec(11L, //
+				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
+				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
+				.addTripSort(MDirectionType.EAST.intValue(), //
+						Arrays.asList(new String[] { //
+						"2035", // Silvercreek at Greengate southbound
+								"1122", // Paisley at Yorkshire eastbound
+								"5859", // Guelph Central Station Platform 20
+						})) //
+				.addTripSort(MDirectionType.WEST.intValue(), //
+						Arrays.asList(new String[] { //
+						"5851", // Guelph Central Station Platform 4
+								"1105", // ++
+								"2035", // Silvercreek at Greengate southbound
+						})) //
+				.compileBothTripSort());
+		map2.put(12L, new RouteTripSpec(12L, //
 				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), //
 				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.SOUTH.getId()) //
 				.addTripSort(MDirectionType.NORTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route8-0813_Stone Road Mall", //
-								"Route8-0817_College Ave. W. at Meadowcroft", //
-								"Route8-0820_Edinburgh Rd. S. at Municipal St.", //
-								"Route8-0826_Guelph City Hall", //
-								"Route8-0827_GCS East Plat19", //
-								"Route8-0800_GCS Mid Plat7", //
+						"5860", // Guelph Central Station Platform 22
+								"1207", // ++
+								"1214", // Woodlawn at Victoria westbound
 						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route8-0800_GCS Mid Plat7", //
-								"Route8-0806_Maple St. at Forest St.", //
-								"Route8-0809_College Ave. W. at Edinburgh Rd. S.", //
-								"Route8-0812_Janefield Ave. at Scottsdale Dr.", //
-								"Route8-0813_Stone Road Mall" //
+						"1214", // Woodlawn at Victoria westbound
+								"1221", // ++
+								"5858", // Guelph Central Station Platform 19
 						})) //
 				.compileBothTripSort());
-		map2.put(9l, new RouteTripSpec(9l, //
+		map2.put(13L, new RouteTripSpec(13L, //
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
 				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
 				.addTripSort(MDirectionType.EAST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route9-0915_Imperial Rd. at West Acres Dr.", //
-								"Route9-0920_180 Waterloo Ave.", //
-								"Route9-0924_GCS East Plat18" //
+						"5837", // Guelph Central Station Platform 5
+								"1313", // ++
+								"370", // Eastview at Starwood westbound
 						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route9-0900_GCS West Plat8", //
-								"Route9-0909_Imperial Rd. S. at Stephanie Dr.", //
-								"Route9-0912_Paisley Rd. at Zehrs", //
-								"Route9-0915_Imperial Rd. at West Acres Dr." //
-						})) //
-				.compileBothTripSort());
-		map2.put(10l, new RouteTripSpec(10l, //
-				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
-				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
-				.addTripSort(MDirectionType.EAST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route10-1019_Paisley Rd. at West Hill Estates", //
-								"Route10-1024_Paisley St. at Yorkshire St. N.", //
-								"Route10-1028_GCS East Plat21" //
-						})) //
-				.addTripSort(MDirectionType.WEST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route10-1000_GCS East Plat3", //
-								"Route10-1009_Paisley Rd. at Heath Rd.", //
-								"Route10-1013_Willow Rd. at Westwood Rd.", //
-								"Route10-1019_Paisley Rd. at West Hill Estates" //
-						})) //
-				.compileBothTripSort());
-		map2.put(11l, new RouteTripSpec(11l, //
-				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
-				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
-				.addTripSort(MDirectionType.EAST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route11-1118_158 Willow Rd.", //
-								"Route11-1122_Paisley St. at Yorkshire St. N. - EB", //
-								"Route11-1124_Paisley St. at Norfolk St.", //
-								"Route11-1130_St George's Square IF Shoe store", // ==
-								"Route11-1125_GCS East Plat2", //
-								"Route11-1126_GCS West Plat22", //
-						})) //
-				.addTripSort(MDirectionType.WEST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route11-1100_GCS West Plat15", //
-								"Route11-1109_Dawson Rd. at Shelldale Cres.", //
-								"Route11-1113_361 Speedvale Ave. W.", //
-								"Route11-1118_158 Willow Rd." //
-						})) //
-				.compileBothTripSort());
-		map2.put(12l, new RouteTripSpec(12l, //
-				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), //
-				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.SOUTH.getId()) //
-				.addTripSort(MDirectionType.NORTH.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route12-1200_GCS East Plat19", //
-								"Route12-1206_Delhi St. at Emma St. - NB", //
-								"Route12-1207_Emma St. at Metcalfe St.", //
-								"Route12-1215_Windsor St. at Kingsley Crt." //
-						})) //
-				.addTripSort(MDirectionType.SOUTH.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route12-1215_Windsor St. at Kingsley Crt.", //
-								"Route12-1222_Delhi St. at Emma St.", //
-								"Route12-1228_GCS Mid Plat7" //
-						})) //
-				.compileBothTripSort());
-		map2.put(13l, new RouteTripSpec(13l, //
-				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
-				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
-				.addTripSort(MDirectionType.EAST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route13-1300_GCS East Plat18", //
-								"Route13-1311_Cassino Ave. at William St.", //
-								"Route13-1312_Cassino Ave. at Palermo Cres.", //
-								"Route13-1318_Starwood Dr. at Watt St." //
-						})) //
-				.addTripSort(MDirectionType.WEST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route13-1318_Starwood Dr. at Watt St.", //
-								"Route13-1323_211 Victoria Rd. N.", //
-								"Route13-1327_Eramosa Rd. at Metcalfe St.", //
-								"Route13-1329_St George's Square IF Shoe store", //
-								"Route13-1330_GCS West Plat8", //
-								"Route13-1300_GCS East Plat18" //
+						"370", // Eastview at Starwood westbound
+								"1324", // Eramosa at Orchard westbound
+								"1130", // ==
+								"5837", // Guelph Central Station Platform 5
+								"5841", // Guelph Central Station Platform 21
 						})) //
 				.compileBothTripSort());
 		map2.put(14l, new RouteTripSpec(14l, //
@@ -684,149 +420,266 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
 				.addTripSort(MDirectionType.EAST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route14-1400_GCS East Plat22", //
-								"Route14-1406_Grange Rd. at Victoria Rd. N.", //
-								"Route14-1412_Watson Pkwy. N. at Fleming Rd." //
+						"5859", // Guelph Central Station Platform 20
+								"1406", // ++
+								"332", // Watson at Fleming southbound
 						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route14-1412_Watson Pkwy. N. at Fleming Rd.", //
-								"Route14-1419_Victoria Rd. N. at Grange Rd.", //
-								"Route14-1424_Elizabeth St. at Red Chevron Club", // ==
-								"Route14-1426_Guelph Central Station Platform 15", // !=
-								"Route14-1425_GCS East Plat4" //
+						"332", // Watson at Fleming southbound
+								"1418", // ++
+								"5851", // Guelph Central Station Platform 4
 						})) //
 				.compileBothTripSort());
-		map2.put(15l, new RouteTripSpec(15l, //
+		map2.put(15L, new RouteTripSpec(15L, //
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
 				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
 				.addTripSort(MDirectionType.EAST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route15-1508_College Ave. W. at Flanders Rd.", //
-								"Route15-1515_Stone Road Mall Depart", //
-								"Route15-1515_Stone Road Mall", //
-								"Route15-1515_Stone Road Mall Arrive", //
-								"Route15-1521_UC South Loop Plat2" //
+						"1508", // College at Flanders northbound
+								"118", // College at Lynnwood eastbound
+								"5847", // University Centre North Loop Platform 11
 						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route15-1500_UC South Loop Plat2", //
-								"Route15-1504_Stone Rd. W. Edinburgh Rd. S.", //
-								"Route15-1508_College Ave. W. at Flanders Rd." //
+						"5834", // University Centre North Loop Platform 10
+								"207", // ++
+								"1508", // College at Flanders northbound
 						})) //
 				.compileBothTripSort());
-		map2.put(16l, new RouteTripSpec(16l, //
+		map2.put(16L, new RouteTripSpec(16L, //
+				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
+				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
+				.addTripSort(MDirectionType.EAST.intValue(), //
+						Arrays.asList(new String[] { //
+						"1619", // Laird at Clair westbound
+								"1621", // ++
+								"1624", // 485 Southgate southbound
+						})) //
+				.addTripSort(MDirectionType.WEST.intValue(), //
+						Arrays.asList(new String[] { //
+						"1624", // 485 Southgate southbound
+								"1627", // ++
+								"1631", // Clair at Laird eastbound
+						})) //
+				.compileBothTripSort());
+		map2.put(17L, new RouteTripSpec(17L, //
 				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), //
 				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.SOUTH.getId()) //
 				.addTripSort(MDirectionType.NORTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route16-1631_300 Clair (Water Tower)", //
-								"Route16-1632_Bishop Macdonell High School", //
-								"Route16-1633_Gosling Gardens at Clair Rd. W.", //
-								"Route16-1640_Gordon St. at Valley Rd.", //
-								"Route16-1646_Gordon St. at Monticello Cres.", //
-								"Route16-1650_Gordon St. at Dormie Lane", //
-								"Route16-1653_Wyndham St. at Fountain St.", // ==
-								"Route16-1654_GCS West Plat15", //
-								"Route16-1600_ Guelph Central Station Platform 2", //
+						"5836", // University Centre North Loop Platform 7
+								"219", // Imperial at Willow northbound
+								"223", // Royal at ARC Industries northbound
+								"320", // Inverness at Wilton northbound
+								"321", // Victoria at Norma southbound
 						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route16-1600_GCS East Plat2", //
-								"Route16-1600_ Guelph Central Station Platform 2", //
-								"Route16-1602_Gordon St. at Water St.", //
-								"Route16-1605_Gordon St. at College Ave. - SB", //
-								"Route16-1611_Gordon St. at Edinburgh Rd. S. - SB", //
-								"Route16-1620_Southgate Dr. at Laird Rd.", //
-								"Route16-1630_829 Southgate Dr.", //
-								"Route16-1631_300 Clair (Water Tower)", //
+						"321", // Victoria at Norma southbound
+								"333", // Watson at Starwood southbound
+								"340", // ++
+								"5836", // University Centre North Loop Platform 7
+								"5848", // University Centre North Loop Platform 12
 						})) //
 				.compileBothTripSort());
-		map2.put(20l, new RouteTripSpec(20l, //
-				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
-				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
-				.addTripSort(MDirectionType.EAST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route20-2016_Governors Rd. at Woodlawn Rd. W.", //
-								"Route20-2028_Imperial Rd. opposite Galaxy Cinema", //
-								"Route20-2033_Silvercreek Pkwy N. at Campbell Rd.", //
-								"Route20-2040_26 Willow Rd.", //
-								"Route20-2046_GCS East Plat20" //
-						})) //
-				.addTripSort(MDirectionType.WEST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route20-2000_GCS East Plat20", //
-								"Route20-2001_Woolwich St. at Norwich St. E.", //
-								"Route20-2005_Willow West Mall", //
-								"Route20-2010_Willow Rd. at Flaherty Dr. - WB", //
-								"Route20-2016_Governors Rd. at Woodlawn Rd. W." //
-						})) //
-				.compileBothTripSort());
-		map2.put(50l, new RouteTripSpec(50l, //
-				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
-				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
-				.addTripSort(MDirectionType.EAST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route50-5004_Stone Rd. W. Edinburgh Rd. S.", //
-								"Route50-5008_Scottsdale Dr. at Wilsonview Ave.", //
-								"Route50-5013_UC North Loop Plat12" //
-						})) //
-				.addTripSort(MDirectionType.WEST.intValue(), //
-						Arrays.asList(new String[] { //
-						"Route50-5000_UC North Loop Plat12", //
-								"Route50-5001_Stone Rd W. at Reasearch Ln.", //
-								"Route50-5004_Stone Rd. W. Edinburgh Rd. S." //
-						})) //
-				.compileBothTripSort());
-		map2.put(56l, new RouteTripSpec(56l, //
+		map2.put(18L, new RouteTripSpec(18L, //
 				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), //
 				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.SOUTH.getId()) //
 				.addTripSort(MDirectionType.NORTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route56-5604_Frederick Dr. at Waterford Dr.", //
-								"Route56-5610_Gordon St. at Landsdown Dr.", //
-								"Route56-5616_UC North Loop Plat11" //
+						"5840", // University Centre South Loop Platform 6
+								"372", // Eastview at Victoria westbound
+								"378", // Victoria at Norma northbound
+								"379", // Inverness at Wilton southbound
 						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route56-5600_UC North Loop Plat11", //
-								"Route56-5601_Stone Rd. E. at Victoria Rd. S. - EB", //
-								"Route56-5619_Victoria Road South at Macalister Boulevard southbound", //
-								"Route56-5602_1035 Victoria Rd.", //
-								"Route56-5604_Frederick Dr. at Waterford Dr." //
+						"379", // Inverness at Wilton southbound
+								"278", // Elmira at West End Community Centre southbound
+								"6047", // Stone Road Mall Platform 2
+								"1520", // ==
+								"5840", // University Centre South Loop Platform 6
+								"5848", // University Centre North Loop Platform 12
 						})) //
 				.compileBothTripSort());
-		map2.put(57l, new RouteTripSpec(57l, //
+		map2.put(20L, new RouteTripSpec(20L, //
 				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
 				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
 				.addTripSort(MDirectionType.EAST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route57-5709_Stone Road West at Scottsdale Road eastbound", //
-								"Route57-5712_252 Stone Rd. W.", //
-								"Route57-5714_UC North Loop Plat12" //
+						"2028", // Imperial at Galaxy Cinema northbound
+								"1130", // ==
+								"5833", // Guelph Central Station Platform 1
+								"5853", // Guelph Central Station Platform 8
 						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route57-5700_UC North Loop Plat11", //
-								"Route57-5706_Ironwood Road at Reid Court westbound", //
-								"Route57-5709_Stone Road West at Scottsdale Road eastbound" //
+						"5833", // Guelph Central Station Platform 1
+								"5863", // ++
+								"2028", // Imperial at Galaxy Cinema northbound
 						})) //
 				.compileBothTripSort());
-		map2.put(58l, new RouteTripSpec(58l, //
-				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), //
-				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
+		map2.put(40L, new RouteTripSpec(40L, //
+				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), //
+				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.SOUTH.getId()) //
+				.addTripSort(MDirectionType.NORTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"6047", "6047", // Stone Road Mall Platform 2
+								"5850", "5850", // Guelph Central Station Platform 3
+						})) //
+				.addTripSort(MDirectionType.SOUTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"5850", // Guelph Central Station Platform 3
+								"156", // College at Centennial westbound
+								"6047", // Stone Road Mall Platform 2
+						})) //
+				.compileBothTripSort());
+		map2.put(41L, new RouteTripSpec(41L, //
+				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), // Downtown
+				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.SOUTH.getId()) // University
+				.addTripSort(MDirectionType.NORTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"5848", // University Centre North Loop Platform 12
+								"292", // ++
+								"544", // ++
+								"5839", // Guelph Central Station Platform 6
+						})) //
+				.addTripSort(MDirectionType.SOUTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"5839", // Guelph Central Station Platform 6
+								"501", // ++
+								"356", // ==
+								"5840", // University Centre South Loop Platform 6
+								"5836", // University Centre North Loop Platform 7
+								"5848", // University Centre North Loop Platform 12
+						})) //
+				.compileBothTripSort());
+		map2.put(50L + RID_ENDS_WITH_U, new RouteTripSpec(50L + RID_ENDS_WITH_U, // 50U
+				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), // University
+				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) // Stone
 				.addTripSort(MDirectionType.EAST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route58-5804_583 Edinburgh Rd. S.", //
-								"Route58-5808_Kortright Rd. opposite Yewholme Dr.", //
-								"Route58-5812_UC North Loop Plat11" //
+						// "207", // Stone at Edinburgh westbound
+								"114", // Stone at Scottsdale westbound
+								"1516", // ++
+								"5846", // University Centre North Loop Platform 8
 						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
 						Arrays.asList(new String[] { //
-						"Route58-5800_UC North Loop Plat12", //
-								"Route58-5802_Stone Rd. W. at Fire Hall", //
-								"Route58-5803_175 Stone Rd. W.", //
-								"Route58-5804_583 Edinburgh Rd. S." //
+						"5846", // University Centre North Loop Platform 8
+								"1501", // ++
+								"207", // Stone at Edinburgh westbound
+								"114", // Stone at Scottsdale westbound
+						})) //
+				.compileBothTripSort());
+		map2.put(51L + RID_ENDS_WITH_U, new RouteTripSpec(51L + RID_ENDS_WITH_U, // 51U
+				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), // University
+				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) // Janefield
+				.addTripSort(MDirectionType.EAST.intValue(), //
+						Arrays.asList(new String[] { //
+						"116", // Janefield at Mason northbound
+								"1520", // ==
+								"5845", // University Centre South Loop Platform 4
+								"5847", // University Centre North Loop Platform 11
+						})) //
+				.addTripSort(MDirectionType.WEST.intValue(), //
+						Arrays.asList(new String[] { //
+						"5845", // University Centre South Loop Platform 4
+								"115", // Janefield at Poppy northbound
+								"116", // Janefield at Mason northbound
+						})) //
+				.compileBothTripSort());
+		map2.put(52L + RID_ENDS_WITH_U, new RouteTripSpec(52L + RID_ENDS_WITH_U, // 52U
+				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), // University
+				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.SOUTH.getId()) // Kortright / Edinburgh
+				.addTripSort(MDirectionType.NORTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"166", // Edinburgh at Rickson eastbound
+								"167", // Edinburgh at Carrington eastbound
+								"171", // ++
+								"5845", // University Centre South Loop Platform 4
+						})) //
+				.addTripSort(MDirectionType.SOUTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"5847", // University Centre North Loop Platform 11
+								"703,", // ++
+								"166", // Edinburgh at Rickson eastbound
+						})) //
+				.compileBothTripSort());
+		map2.put(56L + RID_ENDS_WITH_U, new RouteTripSpec(56L + RID_ENDS_WITH_U, // 56U
+				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), // University
+				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.SOUTH.getId()) // Colonial
+				.addTripSort(MDirectionType.NORTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"5605", // Colonial at Lambeth Way northbound
+								"169", // ++
+								"5842", // University Centre South Loop Platform 0
+						})) //
+				.addTripSort(MDirectionType.SOUTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"5842", // University Centre South Loop Platform 0
+								"104", // ++
+								"5605", // Colonial at Lambeth Way northbound
+						})) //
+				.compileBothTripSort());
+		map2.put(57L + RID_ENDS_WITH_U, new RouteTripSpec(57L + RID_ENDS_WITH_U, // 57U
+				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), // University
+				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) // Ironwood
+				.addTripSort(MDirectionType.EAST.intValue(), //
+						Arrays.asList(new String[] { //
+						"5706", // Ironwood at Reid westbound
+								"5709", // ++
+								"5846", // University Centre North Loop Platform 8
+						})) //
+				.addTripSort(MDirectionType.WEST.intValue(), //
+						Arrays.asList(new String[] { //
+						"5838", // University Centre North Loop Platform 9
+								"1503", // ++
+								"5706", // Ironwood at Reid westbound
+						})) //
+				.compileBothTripSort());
+		map2.put(58L + RID_ENDS_WITH_U, new RouteTripSpec(58L + RID_ENDS_WITH_U, // 58U
+				MDirectionType.EAST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.EAST.getId(), // University
+				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) // Edinburgh
+				.addTripSort(MDirectionType.EAST.intValue(), //
+						Arrays.asList(new String[] { //
+						"162", // Edinburgh at Ironwood southbound
+								"721", // ++
+								"5838", // University Centre North Loop Platform 9
+						})) //
+				.addTripSort(MDirectionType.WEST.intValue(), //
+						Arrays.asList(new String[] { //
+						"5846", // University Centre North Loop Platform 8
+								"1501", // ++
+								"162", // Edinburgh at Ironwood southbound
+						})) //
+				.compileBothTripSort());
+		map2.put(99L, new RouteTripSpec(99L, //
+				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), //
+				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.SOUTH.getId()) //
+				.addTripSort(MDirectionType.NORTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"1634", // Gosling Gardens at Gosling Garden Park northbound
+								"5848", // University Centre North Loop Platform 12
+								"295", // == Gordon at Water northbound
+								"5852", // != <> Guelph Central Station Platform 7 >> SOUTH
+								"6046", // != Gordon at Royal City Park northbound >> CONTINUE
+								"923", // ==
+								"5853", // != Guelph Central Station Platform 8 => END
+								"5857", // != Guelph Central Station Platform 18
+								"1101", // ???
+								"233", // Woodlawn at Woolwich eastbound
+						})) //
+				.addTripSort(MDirectionType.SOUTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"233", // Woodlawn at Woolwich eastbound
+								"238", // ++
+								"5852", // <> Guelph Central Station Platform 7
+								"501", // ++
+								"1602", // Gordon at Water southbound
+								"5832", // University Centre South Loop Platform 5
+								"1615", // Gordon at Clairfields southbound
 						})) //
 				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
@@ -845,9 +698,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
 			return ALL_ROUTE_TRIPS2.get(mRoute.getId()).getAllTrips();
 		}
-		System.out.printf("\nUnexpected split trip (unexpected route ID: %s) %s\n", mRoute.getId(), gTrip);
-		System.exit(-1);
-		return null;
+		return super.splitTrip(mRoute, gTrip, gtfs);
 	}
 
 	@Override
@@ -864,6 +715,15 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 	public void setTripHeadsign(MRoute mRoute, MTrip mTrip, GTrip gTrip, GSpec gtfs) {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
 			return; // split
+		}
+		if (mRoute.getId() == COMMUNITY_BUS_RID) {
+			if (gTrip.getDirectionId() == 0 && gTrip.getTripHeadsign().equals("Community Bus North Loop")) {
+				mTrip.setHeadsignDirection(MDirectionType.NORTH);
+				return;
+			} else if (gTrip.getDirectionId() == 1 && gTrip.getTripHeadsign().equals("Community Bus South Loop")) {
+				mTrip.setHeadsignDirection(MDirectionType.SOUTH);
+				return;
+			}
 		}
 		System.out.printf("\nUnexpected trip headsign for %s!\n", gTrip);
 		System.exit(-1);
