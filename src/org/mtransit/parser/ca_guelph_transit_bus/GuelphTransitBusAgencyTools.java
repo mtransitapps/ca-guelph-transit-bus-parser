@@ -452,7 +452,8 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 				MDirectionType.WEST.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.WEST.getId()) //
 				.addTripSort(MDirectionType.EAST.intValue(), //
 						Arrays.asList(new String[] { //
-						"1619", // Laird at Clair westbound
+						"6058", // Clair at Gordon westbound
+								"1619", // Laird at Clair westbound
 								"1621", // ++
 								"1624", // 485 Southgate southbound
 						})) //
@@ -461,6 +462,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						"1624", // 485 Southgate southbound
 								"1627", // ++
 								"1631", // Clair at Laird eastbound
+								"6058", // Clair at Gordon westbound
 						})) //
 				.compileBothTripSort());
 		map2.put(17L, new RouteTripSpec(17L, //
@@ -612,7 +614,8 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.SOUTH.getId()) // Colonial
 				.addTripSort(MDirectionType.NORTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"5605", // Colonial at Lambeth Way northbound
+						"6014", // Goodwin at Samuel eastbound
+								"5605", // Colonial at Lambeth Way northbound
 								"169", // ++
 								"5842", // University Centre South Loop Platform 0
 						})) //
@@ -620,7 +623,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"5842", // University Centre South Loop Platform 0
 								"104", // ++
-								"5605", // Colonial at Lambeth Way northbound
+								"6014", // Goodwin at Samuel eastbound
 						})) //
 				.compileBothTripSort());
 		map2.put(57L + RID_ENDS_WITH_U, new RouteTripSpec(57L + RID_ENDS_WITH_U, // 57U
@@ -660,26 +663,32 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.SOUTH.getId()) //
 				.addTripSort(MDirectionType.NORTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"1634", // Gosling Gardens at Gosling Garden Park northbound
+						"6058", // Clair at Gordon westbound
+								"1634", // Gosling Gardens at Gosling Garden Park northbound
 								"5848", // University Centre North Loop Platform 12
 								"295", // == Gordon at Water northbound
 								"5852", // != <> Guelph Central Station Platform 7 >> SOUTH
-								"6046", // != Gordon at Royal City Park northbound >> CONTINUE
+								"6046", // != Gordon at Royal City Park northbound => CONTINUE
 								"923", // ==
 								"5853", // != Guelph Central Station Platform 8 => END
-								"5857", // != Guelph Central Station Platform 18
-								"1101", // ???
-								"233", // Woodlawn at Woolwich eastbound
+								"5857", // != Guelph Central Station Platform 18 >> CONTINUE
+								"6068", // <>
+								"1101", // !=
+								"6055", // Woodlawn Smart Centres Platform 1
 						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
-						"233", // Woodlawn at Woolwich eastbound
+						"6055", // Woodlawn Smart Centres Platform 1
+								"233", // Woodlawn at Woolwich eastbound
 								"238", // ++
+								"6067", // !=
 								"5852", // <> Guelph Central Station Platform 7
-								"501", // ++
+								"6068", // <>
+								"501", // !=
 								"1602", // Gordon at Water southbound
 								"5832", // University Centre South Loop Platform 5
-								"1615", // Gordon at Clairfields southbound
+								"1615", // ++ Gordon at Clairfields southbound
+								"6058", // Clair at Gordon westbound
 						})) //
 				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
