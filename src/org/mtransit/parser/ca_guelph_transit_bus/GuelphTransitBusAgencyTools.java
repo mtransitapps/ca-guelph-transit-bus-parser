@@ -471,6 +471,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 				.addTripSort(MDirectionType.NORTH.intValue(), //
 						Arrays.asList(new String[] { //
 						"5836", // University Centre North Loop Platform 7
+								"1501", // _++
 								"219", // Imperial at Willow northbound
 								"223", // Royal at ARC Industries northbound
 								"320", // Inverness at Wilton northbound
@@ -480,6 +481,8 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"321", // Victoria at Norma southbound
 								"333", // Watson at Starwood southbound
+								"338", // ++
+								"339", // ++
 								"340", // ++
 								"5836", // University Centre North Loop Platform 7
 								"5848", // University Centre North Loop Platform 12
