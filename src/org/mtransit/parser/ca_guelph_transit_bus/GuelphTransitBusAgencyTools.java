@@ -114,6 +114,12 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 				return RID_ENDS_WITH_U + digits;
 			}
 		}
+		if (isGoodEnoughAccepted()) {
+			if (routeShortName.startsWith("Zone ") //
+					|| routeShortName.startsWith("NYE ")) {
+				return Long.parseLong(gRoute.getRouteId());
+			}
+		}
 		System.out.printf("\nCan't find route ID for '%s' (%s)!\n", routeShortName, gRoute);
 		System.exit(-1);
 		return -1l;
@@ -734,6 +740,33 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 				return;
 			} else if (gTrip.getDirectionId() == 1 && gTrip.getTripHeadsign().equals("Community Bus South Loop")) {
 				mTrip.setHeadsignDirection(MDirectionType.SOUTH);
+				return;
+			}
+		}
+		if (isGoodEnoughAccepted()) {
+			if (StringUtils.isEmpty(gTrip.getTripHeadsign())) {
+				if (mRoute.getId() == 972L) { // Zone 1
+					mTrip.setHeadsignString("WHanKor", gTrip.getDirectionId());
+					return;
+				} else if (mRoute.getId() == 973L) { // Zone 2
+					mTrip.setHeadsignString("VicClr", gTrip.getDirectionId());
+					return;
+				} else if (mRoute.getId() == 974L) { // Zone 3
+					mTrip.setHeadsignString("North West", gTrip.getDirectionId());
+					return;
+				} else if (mRoute.getId() == 975L) { // Zone 4
+					mTrip.setHeadsignString("North Central", gTrip.getDirectionId());
+					return;
+				} else if (mRoute.getId() == 976L) { // Zone 5
+					mTrip.setHeadsignString("North East", gTrip.getDirectionId());
+					return;
+				} else if (mRoute.getId() == 977L) { // Zone 6
+					mTrip.setHeadsignString("West Central", gTrip.getDirectionId());
+					return;
+				}
+			}
+			if (mRoute.getId() == 978L) { // NYE 99
+				mTrip.setHeadsignString(gTrip.getTripHeadsign(), gTrip.getDirectionId());
 				return;
 			}
 		}
