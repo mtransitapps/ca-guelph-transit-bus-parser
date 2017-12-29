@@ -91,7 +91,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 
 	private static final Pattern DIGITS = Pattern.compile("[\\d]+");
 
-	private static final String COMMUNITY_BUS_RSN = "Com";
+	private static final String COMMUNITY_BUS_RSN = "Comm";
 	private static final long COMMUNITY_BUS_RID = 9998L;
 
 	private static final String U = "U";
@@ -116,7 +116,8 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 		}
 		if (isGoodEnoughAccepted()) {
 			if (routeShortName.startsWith("Zone ") //
-					|| routeShortName.startsWith("NYE ")) {
+					|| routeShortName.startsWith("NYE ") //
+			) {
 				return Long.parseLong(gRoute.getRouteId());
 			}
 		}
@@ -158,41 +159,45 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 	@Override
 	public String getRouteColor(GRoute gRoute) {
 		if (COMMUNITY_BUS_RSN.equals(gRoute.getRouteShortName())) {
-			return "CC5577"; // mix between A54686 (VIOLET) & F36768 (PINK/RED)
+			return "D14625";
+		}
+		if (gRoute.getRouteShortName().startsWith("Zone ") //
+				|| gRoute.getRouteShortName().startsWith("NYE ")) {
+			return "ED1C24";
 		}
 		Matcher matcher = DIGITS.matcher(gRoute.getRouteShortName());
 		if (matcher.find()) {
 			int rsn = Integer.parseInt(matcher.group());
 			switch (rsn) {
 			// @formatter:off
-			case 1: return "403F99";
-			case 2: return "403F99";
-			case 3: return "91459A";
-			case 4: return "1389B8";
-			case 5: return "921A1D";
+			case 1: return "EC008C";
+			case 2: return "EC008C";
+			case 3: return "91469B";
+			case 4: return "1988B7";
+			case 5: return "921B1E";
 			case 6: return "ED1C24";
 			case 7: return "682C91";
-			case 8: return "0081AF";
-			case 9: return "A54686";
-			case 10: return "EC008C";
-			case 11: return "5b7AAE";
-			case 12: return "00828F";
-			case 13: return "821167";
+			case 8: return "0082B1";
+			case 9: return "5C7AAE";
+			case 10: return "A54686";
+			case 11: return "5C7AAE";
+			case 12: return "008290";
+			case 13: return "811167";
 			case 14: return "485E88";
-			case 15: return "8E7140";
-			case 16: return "28702A";
-			case 17: return "CA6528";
-			case 18: return "CA6528";
+			case 15: return "8F7140";
+			case 16: return "29712A";
+			case 17: return "CB640A";
+			case 18: return "CB640A";
 			case 20: return "556940";
-			case 40: return "00588A";
-			case 41: return "345A1A";
-			case 50: return "EC008C"; // 50 U
-			case 51: return "556940"; // 51 U
-			case 52: return "00828F"; // 52 U
+			case 40: return "005689";
+			case 41: return "405D18";
+			case 50: return "A54686"; // 50 U
+			case 51: return "405D18"; // 51 U
+			case 52: return "485E88"; // 52 U
 			case 56: return "ED1C24"; // 56 U
-			case 57: return "5B7AAE"; // 57 U
-			case 58: return "91459A"; // 58 U
-			case 99: return "4f833C";
+			case 57: return "5C7AAE"; // 57 U
+			case 58: return "91469b"; // 58 U
+			case 99: return "4F832E ";
 			// @formatter:on
 			}
 		}
@@ -278,9 +283,10 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"520", // Frederick at Waterford westbound
 								"528", // Gordon at Lowes northbound
-								"174", // ==
-								"5844", // University Centre South Loop Platform 2
-								"5845", // University Centre South Loop Platform 4
+								"168", // ==
+								"169", // !=
+								"5844", // != University Centre South Loop Platform 2
+								"5845", // != University Centre South Loop Platform 4
 						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
@@ -312,6 +318,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"5843", // University Centre South Loop Platform 1
 								"706", // ++
+								"709", // Downey at Woodland Glen westbound
 								"713", // Ptarmigan at Downey eastbound
 						})) //
 				.addTripSort(MDirectionType.WEST.intValue(), //
@@ -500,8 +507,9 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 				.addTripSort(MDirectionType.NORTH.intValue(), //
 						Arrays.asList(new String[] { //
 						"5840", // University Centre South Loop Platform 6
+								"366", // Watson at Fleming northbound
 								"372", // Eastview at Victoria westbound
-								"378", // Victoria at Norma northbound
+								"378", // ++ Victoria at Norma northbound
 								"379", // Inverness at Wilton southbound
 						})) //
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
@@ -510,8 +518,8 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 								"278", // Elmira at West End Community Centre southbound
 								"6047", // Stone Road Mall Platform 2
 								"1520", // ==
-								"5840", // University Centre South Loop Platform 6
-								"5848", // University Centre North Loop Platform 12
+								"5840", // != University Centre South Loop Platform 6
+								"5848", // != University Centre North Loop Platform 12
 						})) //
 				.compileBothTripSort());
 		map2.put(20L, new RouteTripSpec(20L, //
@@ -673,13 +681,12 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 				.addTripSort(MDirectionType.NORTH.intValue(), //
 						Arrays.asList(new String[] { //
 						"6058", // Clair at Gordon westbound
-								"1634", // Gosling Gardens at Gosling Garden Park northbound
+								"1634", // ++ Gosling Gardens at Gosling Garden Park northbound
 								"5848", // University Centre North Loop Platform 12
-								"295", // == Gordon at Water northbound
-								"5852", // != <> Guelph Central Station Platform 7 >> SOUTH
-								"6046", // != Gordon at Royal City Park northbound => CONTINUE
-								"923", // ==
+								"544", // == !=
+								"6067", // == <>
 								"5853", // != Guelph Central Station Platform 8 => END
+								"5852", // != <> Guelph Central Station Platform 7 >> SOUTH
 								"5857", // != Guelph Central Station Platform 18 >> CONTINUE
 								"6068", // <>
 								"1101", // !=
@@ -688,9 +695,9 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
 						"6055", // Woodlawn Smart Centres Platform 1
-								"233", // Woodlawn at Woolwich eastbound
-								"238", // ++
-								"6067", // !=
+								"233", // ++ Woodlawn at Woolwich eastbound
+								"6094", // !=
+								"6067", // <>
 								"5852", // <> Guelph Central Station Platform 7
 								"6068", // <>
 								"501", // !=
@@ -706,7 +713,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 	@Override
 	public int compareEarly(long routeId, List<MTripStop> list1, List<MTripStop> list2, MTripStop ts1, MTripStop ts2, GStop ts1GStop, GStop ts2GStop) {
 		if (ALL_ROUTE_TRIPS2.containsKey(routeId)) {
-			return ALL_ROUTE_TRIPS2.get(routeId).compare(routeId, list1, list2, ts1, ts2, ts1GStop, ts2GStop);
+			return ALL_ROUTE_TRIPS2.get(routeId).compare(routeId, list1, list2, ts1, ts2, ts1GStop, ts2GStop, this);
 		}
 		return super.compareEarly(routeId, list1, list2, ts1, ts2, ts1GStop, ts2GStop);
 	}
@@ -722,7 +729,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 	@Override
 	public Pair<Long[], Integer[]> splitTripStop(MRoute mRoute, GTrip gTrip, GTripStop gTripStop, ArrayList<MTrip> splitTrips, GSpec routeGTFS) {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
-			return SplitUtils.splitTripStop(mRoute, gTrip, gTripStop, routeGTFS, ALL_ROUTE_TRIPS2.get(mRoute.getId()));
+			return SplitUtils.splitTripStop(mRoute, gTrip, gTripStop, routeGTFS, ALL_ROUTE_TRIPS2.get(mRoute.getId()), this);
 		}
 		return super.splitTripStop(mRoute, gTrip, gTripStop, splitTrips, routeGTFS);
 	}
