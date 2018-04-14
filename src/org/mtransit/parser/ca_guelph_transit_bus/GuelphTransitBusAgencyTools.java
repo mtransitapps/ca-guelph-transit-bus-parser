@@ -91,7 +91,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 
 	private static final Pattern DIGITS = Pattern.compile("[\\d]+");
 
-	private static final String COMMUNITY_BUS_RSN = "Comm";
+	private static final String COMMUNITY_BUS_RSN = "Com";
 	private static final long COMMUNITY_BUS_RID = 9998L;
 
 	private static final String U = "U";
@@ -254,6 +254,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 				.addTripSort(MDirectionType.SOUTH.intValue(), //
 						Arrays.asList(new String[] { //
 						"231", // Woodlawn at Edinburgh eastbound
+								"389", // Westmount at Kimberley southbound
 								"392", // ++
 								"1130", // ==
 								"5837", // Guelph Central Station Platform 5
