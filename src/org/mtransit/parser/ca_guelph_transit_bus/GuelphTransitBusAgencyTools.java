@@ -713,6 +713,35 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 								"6058", // Clair at Gordon westbound
 						})) //
 				.compileBothTripSort());
+		map2.put(COMMUNITY_BUS_RID, new RouteTripSpec(COMMUNITY_BUS_RID, //
+				MDirectionType.NORTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.NORTH.getId(), // "Woodlawn SmartCentres", //
+				MDirectionType.SOUTH.intValue(), MTrip.HEADSIGN_TYPE_DIRECTION, MDirectionType.SOUTH.getId()) // "Village") // by the Arboretum
+				.addTripSort(MDirectionType.NORTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"5880", // Village by the Arboretum => SOUTH LOOP
+								"602", // !=
+								"6091", // !=
+								"5882", // <>
+								"115", // !=
+								"1652", // !=
+								"401", // <>
+								"5835", // != Guelph Central Station Platform 14 => NORTH LOOP
+								"1001", // !=
+								"5912", // Woodlawn Smart Centres
+						})) //
+				.addTripSort(MDirectionType.SOUTH.intValue(), //
+						Arrays.asList(new String[] { //
+						"5912", // Woodlawn Smart Centres => NORTH LOOP
+								"6088", // !=
+								"5856", // Guelph Central Station Platform 15 => SOUTH LOOP
+								"401", // <>
+								"157", // !=
+								"5882", // <>
+								"6093", // !=
+								"6092", // !=
+								"5880", // Village by the Arboretum => SOUTH LOOP
+						})) //
+				.compileBothTripSort());
 		ALL_ROUTE_TRIPS2 = map2;
 	}
 
@@ -746,15 +775,6 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 	public void setTripHeadsign(MRoute mRoute, MTrip mTrip, GTrip gTrip, GSpec gtfs) {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
 			return; // split
-		}
-		if (mRoute.getId() == COMMUNITY_BUS_RID) {
-			if (gTrip.getDirectionId() == 0 && gTrip.getTripHeadsign().equals("Community Bus North Loop")) {
-				mTrip.setHeadsignDirection(MDirectionType.NORTH);
-				return;
-			} else if (gTrip.getDirectionId() == 1 && gTrip.getTripHeadsign().equals("Community Bus South Loop")) {
-				mTrip.setHeadsignDirection(MDirectionType.SOUTH);
-				return;
-			}
 		}
 		if (isGoodEnoughAccepted()) {
 			if (StringUtils.isEmpty(gTrip.getTripHeadsign())) {
