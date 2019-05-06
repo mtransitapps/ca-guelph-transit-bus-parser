@@ -314,6 +314,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"5831", // University Centre South Loop Platform 3
 								"608", // ++
+								"612", // Ironwood at Woodborough southbound
 								"615", // Ironwood at Kortright northbound
 						})) //
 				.compileBothTripSort());
