@@ -32,7 +32,7 @@ import org.mtransit.parser.mt.data.MTripStop;
 // http://data.open.guelph.ca/
 // http://data.open.guelph.ca/dataset/guelph-transit-gtfs-data
 // http://data.open.guelph.ca/datafiles/guelph-transit/guelph_transit_gtfs.zip
-// http://guelph.ca/uploads/google/google_transit.zip
+// OTHER: http://guelph.ca/uploads/google/google_transit.zip
 public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 
 	public static void main(String[] args) {
