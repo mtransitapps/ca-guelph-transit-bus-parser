@@ -489,8 +489,10 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 						Arrays.asList(new String[] { //
 						"1624", // 485 Southgate southbound
 								"1627", // ++
-								"1631", // Clair at Laird eastbound
-								"6058", // Clair at Gordon westbound
+								"1631", // == Clair at Laird eastbound
+								"6058", // != Clair at Gordon westbound =>
+								"6006", // !=
+								"6101", // Poppy at Gordon westbound =>
 						})) //
 				.compileBothTripSort());
 		map2.put(17L, new RouteTripSpec(17L, //
