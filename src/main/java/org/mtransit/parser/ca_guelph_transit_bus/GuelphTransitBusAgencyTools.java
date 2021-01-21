@@ -723,7 +723,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 		if (ALL_ROUTE_TRIPS2.containsKey(mRoute.getId())) {
 			return; // split
 		}
-		String tripHeadsignLC = gTrip.getTripHeadsign().toLowerCase(Locale.ENGLISH);
+		final String tripHeadsignLC = gTrip.getTripHeadsign().toLowerCase(Locale.ENGLISH);
 		if (tripHeadsignLC.contains("northbound") //
 				|| tripHeadsignLC.contains("north loop")) {
 			mTrip.setHeadsignString("North", gTrip.getDirectionId());
@@ -737,6 +737,11 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 				cleanTripHeadsign(gTrip.getTripHeadsign()),
 				gTrip.getDirectionIdOrDefault()
 		);
+	}
+
+	@Override
+	public boolean directionFinderEnabled() {
+		return false; // DISABLED because provided direction_id USELESS
 	}
 
 	private static final Pattern STARTS_WITH_RSN = Pattern.compile("(^[\\d]+ )", Pattern.CASE_INSENSITIVE);
