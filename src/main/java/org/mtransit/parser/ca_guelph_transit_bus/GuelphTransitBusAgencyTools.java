@@ -2,16 +2,14 @@ package org.mtransit.parser.ca_guelph_transit_bus;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.mtransit.parser.CleanUtils;
+import org.mtransit.commons.CharUtils;
+import org.mtransit.commons.CleanUtils;
+import org.mtransit.commons.StringUtils;
 import org.mtransit.parser.DefaultAgencyTools;
 import org.mtransit.parser.MTLog;
 import org.mtransit.parser.Pair;
 import org.mtransit.parser.SplitUtils;
 import org.mtransit.parser.SplitUtils.RouteTripSpec;
-import org.mtransit.parser.StringUtils;
-import org.mtransit.parser.Utils;
-import org.mtransit.parser.gtfs.data.GCalendar;
-import org.mtransit.parser.gtfs.data.GCalendarDate;
 import org.mtransit.parser.gtfs.data.GRoute;
 import org.mtransit.parser.gtfs.data.GSpec;
 import org.mtransit.parser.gtfs.data.GStop;
@@ -26,7 +24,6 @@ import org.mtransit.parser.mt.data.MTripStop;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -41,54 +38,18 @@ import static org.mtransit.parser.StringUtils.EMPTY;
 public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 
 	public static void main(@Nullable String[] args) {
-		if (args == null || args.length == 0) {
-			args = new String[3];
-			args[0] = "input/gtfs.zip";
-			args[1] = "../../mtransitapps/ca-guelph-transit-bus-android/res/raw/";
-			args[2] = ""; // files-prefix
-		}
 		new GuelphTransitBusAgencyTools().start(args);
 	}
 
-	@Nullable
-	private HashSet<Integer> serviceIdInts;
-
 	@Override
-	public void start(@NotNull String[] args) {
-		MTLog.log("Generating Guelph Transit bus data...");
-		long start = System.currentTimeMillis();
-		this.serviceIdInts = extractUsefulServiceIdInts(args, this, true);
-		super.start(args);
-		MTLog.log("Generating Guelph Transit bus data... DONE in %s.", Utils.getPrettyDuration(System.currentTimeMillis() - start));
+	public boolean defaultExcludeEnabled() {
+		return true;
 	}
 
+	@NotNull
 	@Override
-	public boolean excludingAll() {
-		return this.serviceIdInts != null && this.serviceIdInts.isEmpty();
-	}
-
-	@Override
-	public boolean excludeCalendar(@NotNull GCalendar gCalendar) {
-		if (this.serviceIdInts != null) {
-			return excludeUselessCalendarInt(gCalendar, this.serviceIdInts);
-		}
-		return super.excludeCalendar(gCalendar);
-	}
-
-	@Override
-	public boolean excludeCalendarDate(@NotNull GCalendarDate gCalendarDates) {
-		if (this.serviceIdInts != null) {
-			return excludeUselessCalendarDateInt(gCalendarDates, this.serviceIdInts);
-		}
-		return super.excludeCalendarDate(gCalendarDates);
-	}
-
-	@Override
-	public boolean excludeTrip(@NotNull GTrip gTrip) {
-		if (this.serviceIdInts != null) {
-			return excludeUselessTripInt(gTrip, this.serviceIdInts);
-		}
-		return super.excludeTrip(gTrip);
+	public String getAgencyName() {
+		return "Guelph Transit";
 	}
 
 	@NotNull
@@ -111,11 +72,11 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 		if (COMMUNITY_BUS_RSN.equals(gRoute.getRouteShortName())) {
 			return COMMUNITY_BUS_RID;
 		}
-		String routeShortName = gRoute.getRouteShortName();
-		if (routeShortName.length() > 0 && Utils.isDigitsOnly(routeShortName)) {
+		final String routeShortName = gRoute.getRouteShortName();
+		if (routeShortName.length() > 0 && CharUtils.isDigitsOnly(routeShortName)) {
 			return Long.parseLong(routeShortName); // using route short name as route ID
 		}
-		Matcher matcher = DIGITS.matcher(routeShortName);
+		final Matcher matcher = DIGITS.matcher(routeShortName);
 		if (matcher.find()) {
 			int digits = Integer.parseInt(matcher.group());
 			if (routeShortName.endsWith(U)) {
@@ -140,7 +101,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 	@NotNull
 	@Override
 	public String getRouteLongName(@NotNull GRoute gRoute) {
-		String routeLongName = gRoute.getRouteLongName();
+		String routeLongName = gRoute.getRouteLongNameOrDefault();
 		routeLongName = STARTS_WITH_ROUTE_RSN.matcher(routeLongName).replaceAll(EMPTY);
 		if (StringUtils.isEmpty(routeLongName)) {
 			throw new MTLog.Fatal("getRouteLongName() > Unexpected route short name '%s' (%s)!", gRoute.getRouteShortName(), gRoute);
@@ -746,16 +707,12 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 
 	private static final Pattern STARTS_WITH_RSN = Pattern.compile("(^[\\d]+ )", Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern INDUSTRIAL_ = Pattern.compile("((^|\\W)(industrial)(\\W|$))", Pattern.CASE_INSENSITIVE);
-	private static final String INDUSTRIAL_REPLACEMENT = "$2" + INDUSTRIAL_SHORT + "$4";
-
 	@NotNull
 	@Override
 	public String cleanTripHeadsign(@NotNull String tripHeadsign) {
 		tripHeadsign = CleanUtils.keepToAndRemoveVia(tripHeadsign);
 		tripHeadsign = STARTS_WITH_RSN.matcher(tripHeadsign).replaceAll(EMPTY);
 		tripHeadsign = CleanUtils.CLEAN_AT.matcher(tripHeadsign).replaceAll(CleanUtils.CLEAN_AT_REPLACEMENT);
-		tripHeadsign = INDUSTRIAL_.matcher(tripHeadsign).replaceAll(INDUSTRIAL_REPLACEMENT);
 		tripHeadsign = CleanUtils.cleanNumbers(tripHeadsign);
 		tripHeadsign = CleanUtils.cleanStreetTypes(tripHeadsign);
 		return CleanUtils.cleanLabel(tripHeadsign);
@@ -870,15 +827,11 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 
 	private static final Pattern CLEAN_DEPART_ARRIVE = Pattern.compile("( (arrival|depart)$)", Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern PLATFORM_ = CleanUtils.cleanWords("platform");
-	private static final String PLATFORM_REPLACEMENT_ = CleanUtils.cleanWordsReplacement("P");
-
 	@NotNull
 	@Override
 	public String cleanStopName(@NotNull String gStopName) {
 		gStopName = CleanUtils.CLEAN_AT.matcher(gStopName).replaceAll(CleanUtils.CLEAN_AT_REPLACEMENT);
 		gStopName = CLEAN_DEPART_ARRIVE.matcher(gStopName).replaceAll(EMPTY);
-		gStopName = PLATFORM_.matcher(gStopName).replaceAll(PLATFORM_REPLACEMENT_);
 		gStopName = CleanUtils.cleanBounds(gStopName);
 		gStopName = CleanUtils.cleanStreetTypes(gStopName);
 		gStopName = CleanUtils.cleanNumbers(gStopName);
@@ -894,7 +847,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 		if (stopId.equals("Route5A-0549_Victoria Road South at Macalister Boulevard southbound")) {
 			return 619;
 		}
-		if (gStop.getStopCode() != null && gStop.getStopCode().length() > 0 && Utils.isDigitsOnly(gStop.getStopCode())) {
+		if (gStop.getStopCode() != null && gStop.getStopCode().length() > 0 && CharUtils.isDigitsOnly(gStop.getStopCode())) {
 			return Integer.parseInt(gStop.getStopCode());
 		}
 		int indexOfDASH = stopId.indexOf(DASH);
