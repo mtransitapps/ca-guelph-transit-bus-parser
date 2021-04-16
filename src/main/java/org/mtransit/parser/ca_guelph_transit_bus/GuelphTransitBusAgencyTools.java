@@ -64,7 +64,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 		}
 		final Matcher matcher = DIGITS.matcher(routeShortName);
 		if (matcher.find()) {
-			int digits = Integer.parseInt(matcher.group());
+			final int digits = Integer.parseInt(matcher.group());
 			if (routeShortName.endsWith(U)) {
 				return RID_ENDS_WITH_U + digits;
 			}
@@ -167,7 +167,7 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 
 	private static final Pattern STARTS_WITH_RSN = Pattern.compile("(^[\\d]+ )", Pattern.CASE_INSENSITIVE);
 
-	private static final Pattern STARTS_W_COMMUNITY_BUS_ = Pattern.compile("(^community bus (?=(.{3,})))", Pattern.CASE_INSENSITIVE);
+	private static final Pattern STARTS_W_COMMUNITY_BUS_ = Pattern.compile("(^(community bus|mainline) (?=(.{3,})))", Pattern.CASE_INSENSITIVE);
 
 	@NotNull
 	@Override
