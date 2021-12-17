@@ -71,6 +71,19 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 		if (COMMUNITY_BUS_RSN.equals(routeShortName)) {
 			return COMMUNITY_BUS_RID;
 		}
+		if ("GorEdi".equals(routeShortName)) {
+			return 10_001L;
+		}
+		if ("OD Sout".equals(routeShortName)
+			|| "ODSout".equals(routeShortName)) {
+			return 10_002L;
+		}
+		if ("VicClr".equals(routeShortName)) {
+			return 10_003L;
+		}
+		if ("WHanSco".equals(routeShortName)) {
+			return 10_004L;
+		}
 		return super.convertRouteIdFromShortNameNotSupported(routeShortName);
 	}
 
