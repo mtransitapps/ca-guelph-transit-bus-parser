@@ -84,6 +84,9 @@ public class GuelphTransitBusAgencyTools extends DefaultAgencyTools {
 		if ("WHanSco".equals(routeShortName)) {
 			return 10_004L;
 		}
+		if ("BREW".equals(routeShortName)) {
+			return 10_005L;
+		}
 		return super.convertRouteIdFromShortNameNotSupported(routeShortName);
 	}
 
